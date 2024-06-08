@@ -1,3 +1,5 @@
+using WebApplication_2_ALM_test_1;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +28,13 @@ builder.Services.AddSwaggerGen(options =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 });
+
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Регистрация сервисов
+builder.Services.AddSingleton(new Database(connectionString));
 
 var app = builder.Build();
 
