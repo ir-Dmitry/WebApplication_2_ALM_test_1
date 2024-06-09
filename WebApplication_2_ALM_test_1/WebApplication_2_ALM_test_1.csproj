@@ -13,12 +13,12 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Views\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Repositorys\" />
-  </ItemGroup>
-
+	
+	<ItemGroup>
+		<Folder Include="Services\" />
+		<Folder Include="Views\" />
+		<Folder Include="Controllers\" />
+		<Folder Include="Repositorys\" />
+	</ItemGroup>
+	
 </Project>

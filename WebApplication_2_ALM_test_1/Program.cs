@@ -1,25 +1,33 @@
+using Microsoft.OpenApi.Models;
 using WebApplication_2_ALM_test_1;
+using WebApplication_2_ALM_test_1.Repository;
+using WebApplication_2_ALM_test_1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Получение строки подключения из конфигурации
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+// Регистрация сервисов
+builder.Services.AddSingleton(new Database(connectionString));
+builder.Services.AddScoped<ProjectRepository>();
+builder.Services.AddScoped<ProjectService>();
 
-//Добавление необходимых конфигураций для Swagger и документации
+// Регистрация контроллеров
+builder.Services.AddControllers();
+
+// Настройка Swagger/OpenAPI
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "My API",
         Description = "API для управления проектами",
-        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        Contact = new OpenApiContact
         {
             Name = "Dmitry",
-            Email = "Ir-Dmitry73@yandex.ru"/*,
-            Url = new Uri("https://your-website.com")*/
+            Email = "Ir-Dmitry73@yandex.ru"
         }
     });
 
@@ -29,22 +37,28 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
+// Чтение конфигурации из файла
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-// Регистрация сервисов
-builder.Services.AddSingleton(new Database(connectionString));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Настройка конвейера обработки HTTP-запросов
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
