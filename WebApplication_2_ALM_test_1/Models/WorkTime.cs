@@ -15,7 +15,7 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Норма рабочего времени.
         /// </summary>
-        public string _WorkTime { get; set; }
+        public byte _WorkTime { get; set; }
 
         /// <summary>
         /// Список должностей, связанных с этим рабочим временем.

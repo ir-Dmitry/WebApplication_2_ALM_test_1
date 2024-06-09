@@ -35,11 +35,11 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Дата начала.
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// Дата окончания.
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

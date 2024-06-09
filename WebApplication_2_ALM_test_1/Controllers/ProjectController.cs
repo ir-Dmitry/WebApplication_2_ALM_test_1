@@ -89,6 +89,18 @@ namespace WebApplication_2_ALM_test_1.Controllers
             var projects = _projectService.GetAllProjects();
             return Ok(projects);
         }
+
+        /// <summary>
+        /// Получить список проектов.
+        /// </summary>
+        [HttpGet]
+        [Route("GetIdProjects")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
+        public IActionResult GetIdProjects()
+        {
+            var projects = _projectService.GetIdProjects();
+            return Ok(projects);
+        }
     }
 }
 

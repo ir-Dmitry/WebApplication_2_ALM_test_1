@@ -21,5 +21,10 @@ namespace WebApplication_2_ALM_test_1.Services
                 .Select((project, index) => new { project, index })
                 .ToDictionary(x => x.index, x => x.project);
         }
+
+        public IEnumerable<ProjectIdDto> GetIdProjects()
+        {
+            return _projectRepository.GetIdProjects();
+        }
     }
 }

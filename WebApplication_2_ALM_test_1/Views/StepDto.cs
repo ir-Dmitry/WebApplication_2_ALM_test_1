@@ -4,54 +4,55 @@ using WebApplication_2_ALM_test_1.Models;
 namespace WebApplication_2_ALM_test_1.DTO
 {
     /// <summary>
-    /// DTO, представляющий проект.
+    /// DTO, представляющий шаг проекта.
     /// </summary>
-    public class ProjectDto
+    public class StepDto
     {
         /// <summary>
-        /// Статус проекта.
+        /// Статус шага проекта.
         /// </summary>
         public string Status { get; set; }
 
         /// <summary>
-        /// Наименование проекта.
+        /// Наименование шага проекта.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Описание проекта.
+        /// Описание шага проекта.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Дата начала проекта.
+        /// Дата начала шага проекта.
         /// </summary>
         public string? StartDate { get; set; }
 
         /// <summary>
-        /// Дата окончания проекта.
+        /// Дата завершения шага проекта.
         /// </summary>
         public string? EndDate { get; set; }
 
         /// <summary>
-        /// Запланированный бюджет проекта.
+        /// Планируемый бюджет для шага проекта.
         /// </summary>
         public string PlunedBudget { get; set; }
     }
 
     /// <summary>
-    /// DTO, представляющий проект с идентификатором.
+    /// DTO, представляющий шаг проекта с идентификатором.
     /// </summary>
-    public class ProjectIdDto
+    public class StepIdDto
     {
         /// <summary>
-        /// Идентификатор проекта.
+        /// Идентификатор шага проекта.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Наименование проекта.
+        /// Наименование шага проекта.
         /// </summary>
         public string Name { get; set; }
     }
+
 }

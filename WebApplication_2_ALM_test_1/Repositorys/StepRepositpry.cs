@@ -2,32 +2,33 @@
 using WebApplication_2_ALM_test_1.DTO;
 using Microsoft.Data.SqlClient;
 using System.Net.NetworkInformation;
+using WebApplication_2_ALM_test_1.Models;
 
 namespace WebApplication_2_ALM_test_1.Repository
 {
-    public class ProjectRepository
+    public class StepRepository
     {
         private readonly Database _database;
 
-        public ProjectRepository(Database database)
+        public StepRepository(Database database)
         {
             _database = database;
         }
 
-        public IEnumerable<ProjectDto> GetAllProjects()
+        public IEnumerable<StepDto> GetAllSteps()
         {
-            var projects = new List<ProjectDto>();
+            var steps = new List<StepDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT ss.status_name, p.project_name, p.project_description, p.date_of_start, p.date_of_end, p.planed_budget
-                                    FROM projects AS p
-                                    join _status as ss on ss.id_status=p.id_status";
+            command.CommandText = @"SELECT ss.status_name, s.step_name, s.step_description, s.date_of_start, s.date_of_end, s.planed_budget
+                                    FROM steps AS s
+                                    join _status as ss on ss.id_status=s.id_status";
             using var reader = command.ExecuteReader();
 
 
             while (reader.Read())
             {
-                var project = new ProjectDto
+                var step = new StepDto
                 {
                     Status = reader.GetString(0),
                     Name = reader.GetString(1), // Получаем значение столбца "project_name"
@@ -37,32 +38,36 @@ namespace WebApplication_2_ALM_test_1.Repository
                     PlunedBudget = reader.GetSqlDecimal(5).ToString()
                 };
 
-                projects.Add(project);
+                steps.Add(step);
             }
-            return projects;
+            return steps;
         }
 
-        public IEnumerable<ProjectIdDto> GetIdProjects()
+        public IEnumerable<StepIdDto> GetIdSteps(int projectId)
         {
-            var projects = new List<ProjectIdDto>();
+            var steps = new List<StepIdDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT p.id_project, p.project_name
-                                    FROM projects as p";
+            command.CommandText = @"SELECT s.id_step, s.step_name
+                                    FROM steps AS s
+                                    join projects as p on p.id_project=s.id_project
+                                    where p.id_project = @projectId";
+            command.Parameters.AddWithValue("@projectId", projectId);
+
             using var reader = command.ExecuteReader();
 
 
             while (reader.Read())
             {
-                var project = new ProjectIdDto
+                var step = new StepIdDto
                 {
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1)
                 };
 
-                projects.Add(project);
+                steps.Add(step);
             }
-            return projects;
+            return steps;
         }
     }
 }

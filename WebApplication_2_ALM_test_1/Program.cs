@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using WebApplication_2_ALM_test_1;
+using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Repository;
 using WebApplication_2_ALM_test_1.Services;
 
@@ -11,7 +12,23 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Регистрация сервисов
 builder.Services.AddSingleton(new Database(connectionString));
 builder.Services.AddScoped<ProjectRepository>();
-builder.Services.AddScoped<ProjectService>();
+builder.Services.AddScoped<ProjectService>(); 
+builder.Services.AddScoped<StepRepository>();
+builder.Services.AddScoped<StepService>();
+builder.Services.AddScoped<TaskRepository>();
+builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<PostRepository>();
+builder.Services.AddScoped<PostService>();
+builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<OrganisationRepository>();
+builder.Services.AddScoped<OrganisationService>();
+builder.Services.AddScoped<ProfileRepository>();
+builder.Services.AddScoped<ProfileService>();
+builder.Services.AddScoped<StatusRepository>();
+builder.Services.AddScoped<StatusService>();
+builder.Services.AddScoped<WorkTimeRepository>();
+builder.Services.AddScoped<WorkTimeService>();
 
 // Регистрация контроллеров
 builder.Services.AddControllers();

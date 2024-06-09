@@ -18,7 +18,7 @@
         /// <summary>
         /// Описание организации.
         /// </summary>
-        public string? OrganisationDescription { get; set; }
+        //public string? OrganisationDescription { get; set; }
 
         /// <summary>
         /// Номер телефона организации.
@@ -33,7 +33,7 @@
         /// <summary>
         /// ИНН (индивидуальный налоговый номер) организации.
         /// </summary>
-        public Int64? TIN { get; set; }
+        //public Int64? TIN { get; set; }
 
         /// <summary>
         /// Список сотрудников, работающих в этой организации.
