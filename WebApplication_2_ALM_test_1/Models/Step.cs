@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace WebApplication_2_ALM_test_1.Models
 {
@@ -15,16 +16,18 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Проект, к которому относится этот этап.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Project Project { get; set; }
 
         /// <summary>
         /// Планируемый бюджет для этого этапа.
         /// </summary>
-        public string? PlanedBudget { get; set; }
+        public string? PlannedBudget { get; set; }
 
         /// <summary>
         /// Список задач, связанных с этим этапом.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Task>? Task { get; set; }
     }
 }

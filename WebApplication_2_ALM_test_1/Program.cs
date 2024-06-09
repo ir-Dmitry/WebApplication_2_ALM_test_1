@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 using WebApplication_2_ALM_test_1;
 using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Repository;
@@ -32,6 +33,12 @@ builder.Services.AddScoped<WorkTimeService>();
 
 // Регистрация контроллеров
 builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 // Настройка Swagger/OpenAPI
 builder.Services.AddSwaggerGen(options =>

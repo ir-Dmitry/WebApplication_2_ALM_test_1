@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApplication_2_ALM_test_1.Models
 {
@@ -19,6 +20,8 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Связанный статус.
         /// </summary>
+        
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Status? Status { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 namespace WebApplication_2_ALM_test_1.Models
 {
@@ -25,11 +26,13 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Организация, к которой принадлежит сотрудник.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Organisation? Organisations { get; set; }
 
         /// <summary>
         /// Должность сотрудника.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Post Post { get; set; }
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Список задач, назначенных этому сотруднику.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Task>? Task { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             var Tasks = new List<TaskDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT t.task_name, st.status_name, t.task_description, e.employees_name, t.date_of_start, t.date_of_end, (p.salary/wt.work_time*t.task_time) as task_reward
+            command.CommandText = @"SELECT t.task_name, st.status_name, t.task_description, e.employees_name, t.date_of_start, t.date_of_end, (p.salary/wt.work_time*t.task_time) as task_reward, t.id_task
                                     FROM tasks as t
                                     join employees as e on t.id_employee = e.id_employee
                                     join _status as st on t.id_status=st.id_status
@@ -32,6 +32,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 var Task = new TaskDto
                 {
+                    Id = reader.GetInt32(7),
                     Name = reader.GetString(0), // Получаем значение столбца "Task_name"
                     Status = reader.GetString(1), // Получаем значение столбца "status_name"
                     Description = reader.GetString(2), // Получаем значение столбца "Task_description"

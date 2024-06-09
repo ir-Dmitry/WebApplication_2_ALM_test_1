@@ -20,7 +20,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             var steps = new List<StepDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT ss.status_name, s.step_name, s.step_description, s.date_of_start, s.date_of_end, s.planed_budget
+            command.CommandText = @"SELECT ss.status_name, s.step_name, s.step_description, s.date_of_start, s.date_of_end, s.planed_budget, s.id_step
                                     FROM steps AS s
                                     join _status as ss on ss.id_status=s.id_status";
             using var reader = command.ExecuteReader();
@@ -30,6 +30,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 var step = new StepDto
                 {
+                    Id = reader.GetInt32(6),
                     Status = reader.GetString(0),
                     Name = reader.GetString(1), // Получаем значение столбца "project_name"
                     Description = reader.GetString(2),

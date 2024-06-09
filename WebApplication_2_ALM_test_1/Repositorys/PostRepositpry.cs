@@ -19,7 +19,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             var posts = new List<PostDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT p.post_name, p.post_description, w.work_time, p.salary, p.allowance
+            command.CommandText = @"SELECT p.post_name, p.post_description, w.work_time, p.salary, p.allowance, p.id_post
                                   FROM posts AS p
                                   JOIN work_time AS w ON w.id_work_time= p.id_work_time";
             using var reader = command.ExecuteReader();
@@ -29,6 +29,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 var post = new PostDto
                 {
+                    Id = reader.GetInt32(5),
                     Name = reader.GetString(0),
                     Description = reader.GetString(1),
                     WorkTime = reader.GetByte(2),

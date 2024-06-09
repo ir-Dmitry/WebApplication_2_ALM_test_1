@@ -1,4 +1,6 @@
-﻿namespace WebApplication_2_ALM_test_1.Models
+﻿using System.Text.Json.Serialization;
+
+namespace WebApplication_2_ALM_test_1.Models
 {
     /// <summary>
     /// Организация.
@@ -38,6 +40,7 @@
         /// <summary>
         /// Список сотрудников, работающих в этой организации.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Employee>? Employee { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             var organisations = new List<OrganisationDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT o.organisation_name,  o.phone_number, o.email
+            command.CommandText = @"SELECT o.organisation_name,  o.phone_number, o.email, o.id_organisation
                                     FROM organisations as o";
             using var reader = command.ExecuteReader();
 
@@ -28,6 +28,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 var organisation = new OrganisationDto
                 {
+                    Id = reader.GetInt32(6),
                     Name = reader.GetString(0), // Получаем значение столбца "organisation_name"
                     PhoneNumber = reader.GetString(1),
                     Email = reader.GetString(2)

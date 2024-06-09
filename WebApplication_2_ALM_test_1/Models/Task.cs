@@ -1,4 +1,6 @@
-﻿namespace WebApplication_2_ALM_test_1.Models
+﻿using System.Text.Json.Serialization;
+
+namespace WebApplication_2_ALM_test_1.Models
 {
     /// <summary>
     /// Задача, связанная с определенным шагом выполнения проекта.
@@ -18,11 +20,13 @@
         /// <summary>
         /// Этап, к которому относится эта задача.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Step Step { get; set; }
 
         /// <summary>
         /// Сотрудник, назначенный на выполнение этой задачи.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual Employee? Employee { get; set; }
 
         /// <summary>

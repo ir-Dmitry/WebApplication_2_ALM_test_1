@@ -9,6 +9,10 @@ namespace WebApplication_2_ALM_test_1.DTO
     public class TaskDto
     {
         /// <summary>
+        /// Идентификатор задачи.
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
         /// Статус задачи.
         /// </summary>
         public string Status { get; set; }

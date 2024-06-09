@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlTypes;
+using System.Text.Json.Serialization;
 using WebApplication_2_ALM_test_1.Models;
 
 namespace WebApplication_2_ALM_test_1.DTO
@@ -8,6 +9,11 @@ namespace WebApplication_2_ALM_test_1.DTO
     /// </summary>
     public class StepDto
     {
+        /// <summary>
+        /// Идентификатор этапа.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Статус шага проекта.
         /// </summary>
@@ -37,6 +43,12 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// Планируемый бюджет для шага проекта.
         /// </summary>
         public string PlunedBudget { get; set; }
+
+        /// <summary>
+        /// Список этапов, связанных с этим проектом. Может быть null.
+        /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
+        public List<Models.Task>? Task { get; set; }
     }
 
     /// <summary>
@@ -53,6 +65,12 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// Наименование шага проекта.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Список этапов, связанных с этим проектом. Может быть null.
+        /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
+        public List<Models.Task>? Task { get; set; }
     }
 
 }

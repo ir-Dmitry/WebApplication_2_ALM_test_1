@@ -1,4 +1,6 @@
-﻿namespace WebApplication_2_ALM_test_1.Models
+﻿using System.Text.Json.Serialization;
+
+namespace WebApplication_2_ALM_test_1.Models
 {
     /// <summary>
     /// Должность в организации.
@@ -18,6 +20,7 @@
         /// <summary>
         /// Рабочее время, связанное с этой должностью.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public virtual WorkTime? WorkTime { get; set; }
 
         /// <summary>
@@ -43,6 +46,7 @@
         /// <summary>
         /// Список сотрудников, занимающих эту должность.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Employee>? Employee { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             var employees = new List<EmployeeDto>();
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT e.employees_name, o.organisation_name, p.post_name, e.phone_number, e.email
+            command.CommandText = @"SELECT e.employees_name, o.organisation_name, p.post_name, e.phone_number, e.email, e.id_employee
                             FROM employees as e
                             join posts as p on p.id_post = e.id_post
                             join organisations as o on o.id_organisation = e.id_organisation";
@@ -30,6 +30,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 var employee = new EmployeeDto
                 {
+                    Id = reader.GetInt32(5),
                     EmployeeName = reader.GetString(0), // Получаем значение столбца "employee_name"
                     Organisation = reader.GetString(1), // Получаем значение столбца "status_name"
                     Post = reader.GetString(2), // Получаем значение столбца "employee_description"

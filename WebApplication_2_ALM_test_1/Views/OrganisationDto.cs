@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlTypes;
+using System.Text.Json.Serialization;
 using WebApplication_2_ALM_test_1.Models;
 
 namespace WebApplication_2_ALM_test_1.DTO
@@ -8,6 +9,11 @@ namespace WebApplication_2_ALM_test_1.DTO
     /// </summary>
     public class OrganisationDto
     {
+        /// <summary>
+        /// Идентификатор организации.
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Наименование организации.
         /// </summary>
@@ -26,6 +32,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Список сотрудников организации.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Employee>? Employee { get; set; }
     }
 
@@ -47,6 +54,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Список сотрудников организации.
         /// </summary>
+        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Employee>? Employee { get; set; }
     }
 

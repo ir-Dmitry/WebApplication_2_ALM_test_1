@@ -56,6 +56,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using WebApplication_2_ALM_test_1.DTO;
+using WebApplication_2_ALM_test_1.Models;
+using WebApplication_2_ALM_test_1.Repository;
 using WebApplication_2_ALM_test_1.Services;
 
 namespace WebApplication_2_ALM_test_1.Controllers
@@ -82,6 +84,18 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// Получить список проектов.
         /// </summary>
         [HttpGet]
+        [Route("GetIdProjects")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
+        public IActionResult GetIdProjects()
+        {
+            var projects = _projectService.GetIdProjects();
+            return Ok(projects);
+        }
+
+        /// <summary>
+        /// Получить список проектов.
+        /// </summary>
+        [HttpGet]
         [Route("GetProject")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectDto>))]
         public IActionResult GetProjects()
@@ -90,16 +104,70 @@ namespace WebApplication_2_ALM_test_1.Controllers
             return Ok(projects);
         }
 
-        /// <summary>
-        /// Получить список проектов.
-        /// </summary>
-        [HttpGet]
-        [Route("GetIdProjects")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
-        public IActionResult GetIdProjects()
+
+
+        //[HttpPost]
+        //[Route("AddProject")]
+        //public IActionResult AddProject(Project project)
+        //{
+        //    try
+        //    {
+        //        _projectService.AddProject(project);
+        //        return Ok("Данные успешно добавлены.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest($"Ошибка при добавлении данных: {ex.Message}");
+        //    }
+        //}
+
+        [HttpPost]
+        [Route("AddProject")]
+        public IActionResult AddProject([FromBody] Project project)
         {
-            var projects = _projectService.GetIdProjects();
-            return Ok(projects);
+            try
+            {
+                _projectService.AddProject(project);
+                return Ok("Проект успешно добавлен");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка при добавлении проекта: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateProject")]
+        public IActionResult UpdateProject(int projectId, Project project)
+        {
+            try
+            {
+                _projectService.UpdateProject(projectId, project);
+                return Ok($"Данные успешно обновлены.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка при обновлении данных: {ex.Message}");
+            }
+        }
+
+
+
+
+
+        [HttpDelete]
+        [Route("DeleteProject/{projectId}")]
+        public IActionResult DeleteProject(int projectId)
+        {
+            try
+            {
+                _projectService.DeleteProject(projectId);
+                return Ok($"Данные успешно удалены.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка при удалении данных: {ex.Message}");
+            }
         }
     }
 }
