@@ -51,7 +51,7 @@ create table employees
 	id_organisation int,
 	id_post int,
 	employees_name nvarchar(100) not null, 
-    phone_number nvarchar(20),
+    phone_number nvarchar(20) unique ,
     email nvarchar(320),
 	--residence_address nvarchar(200),
 	--date_of_birth date default('11.11.1111'),

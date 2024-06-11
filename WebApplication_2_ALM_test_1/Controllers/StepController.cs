@@ -26,16 +26,16 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить название этапа.
+        /// Получить название конкретного этапа. Для отображения на экране этапа
         /// </summary>
         [HttpGet]
-        [Route("GetIdStep/{stepId}")]
+        [Route("GetStepById/{stepId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StepIdDto>))]
-        public IActionResult GetSteps(int stepId)
+        public IActionResult GetStepById(int stepId)
         {
             try
             {
-                var steps = _stepService.GetIdSteps(stepId);
+                var steps = _stepService.GetStepById(stepId);
                 return Ok(steps);
             }
             catch (Exception ex)

@@ -16,7 +16,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// <summary>
         /// Конструктор контроллера.
         /// </summary>
-        /// <param name="statusService">Сервис для работы с профилем сотрудника.</param>
+        /// <param name="statusService">Сервис для работы со статусами.</param>
         /// <param name="logger">Экземпляр логгера.</param>
         public StatusController(StatusService statusService, ILogger<StatusController> logger)
         {
@@ -25,7 +25,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Отобразить профиль сотрудника.
+        /// Отобразить возможные статусы сущностей. Используется для выпадающего списка.
         /// </summary>
         [HttpGet]
         [Route("GetStatus")]

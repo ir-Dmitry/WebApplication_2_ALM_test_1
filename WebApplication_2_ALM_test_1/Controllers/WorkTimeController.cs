@@ -16,7 +16,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// <summary>
         /// Конструктор контроллера.
         /// </summary>
-        /// <param name="workTimeService">Сервис для работы с профилем сотрудника.</param>
+        /// <param name="workTimeService">Сервис для работы с нормами рабочего времени.</param>
         /// <param name="logger">Экземпляр логгера.</param>
         public WorkTimeController(WorkTimeService workTimeService, ILogger<WorkTimeController> logger)
         {
@@ -25,7 +25,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Отобразить профиль сотрудника.
+        /// Отобразить нормы рабочего времени. Используется для выпадающего списка.
         /// </summary>
         [HttpGet]
         [Route("GetWorkTime")]

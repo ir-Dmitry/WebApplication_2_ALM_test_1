@@ -39,16 +39,16 @@ VALUES
 
 INSERT INTO employees (id_organisation, id_post, employees_name,phone_number, email)
 VALUES 				
-    (3, 2, 'Michael Williams',	 '789-012-3456',	 'michael.williams@example.com'),
-    (1, 1, 'John Smith',	 '123-456-7890',	 'john.smith@example.com'),
-    (2, 3, 'Emily Johnson',	 '456-789-0123',	 'emily.johnson@example.com'),
-    (4, 4, 'Jessica Brown',	 '321-654-9870',	 'jessica.brown@example.com'),
-    (5, 5, 'David Miller',	 '789-012-3456',	 'david.miller@example.com'),
-    (6, 6, 'Sarah Davis',	 '456-789-0123',	 'sarah.davis@example.com'),
-    (7, 7, 'James Wilson',	 '123-456-7890',	 'james.wilson@example.com'),
-    (8, 8, 'Linda Moore',	 '789-012-3456',	 'linda.moore@example.com'),
-    (9, 9, 'William Taylor',	 '456-789-0123',	 'william.taylor@example.com'),
-    (10, 10, 'Emma Anderson',	 '321-654-9870',	 'emma.anderson@example.com')
+    (3, 2, 'Michael Williams',	 '789-011-3456',	 'michael.williams@example.com'),
+    (1, 1, 'John Smith',	 '123-456-7810',	 'john.smith@example.com'),
+    (2, 3, 'Emily Johnson',	 '456-789-0163',	 'emily.johnson@example.com'),
+    (4, 4, 'Jessica Brown',	 '321-654-9820',	 'jessica.brown@example.com'),
+    (5, 5, 'David Miller',	 '789-012-6416',	 'david.miller@example.com'),
+    (6, 6, 'Sarah Davis',	 '456-789-0133',	 'sarah.davis@example.com'),
+    (7, 7, 'James Wilson',	 '123-456-7820',	 'james.wilson@example.com'),
+    (8, 8, 'Linda Moore',	 '789-012-3446',	 'linda.moore@example.com'),
+    (9, 9, 'William Taylor',	 '456-781-0123',	 'william.taylor@example.com'),
+    (10, 10, 'Emma Anderson',	 '321-653-9878',	 'emma.anderson@example.com')
 
 
 

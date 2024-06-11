@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebApplication_2_ALM_test_1.DTO;
 using WebApplication_2_ALM_test_1.Models;
@@ -15,11 +16,9 @@ namespace WebApplication_2_ALM_test_1.Services
             _TaskRepository = TaskRepository;
         }
 
-
-
-        public IEnumerable<TaskIdDto> GetTaskById()
+        public IEnumerable<TaskIdDto> GetTaskById(int projectId)
         {
-            return _TaskRepository.GetTaskById();
+            return _TaskRepository.GetTaskById(projectId);
         }
 
         public Dictionary<int, TaskDto> GetAllTasks()
@@ -33,12 +32,22 @@ namespace WebApplication_2_ALM_test_1.Services
         // Метод для добавления нового проекта
         public void AddTask(Models.Task task)
         {
+            string validationError = task.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
             _TaskRepository.AddTask(task);
         }
 
         // Метод для обновления существующего проекта
         public void UpdateTask(int taskId, Models.Task task)
         {
+            string validationError = task.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
             _TaskRepository.UpdateTask(taskId, task);
         }
 

@@ -31,12 +31,24 @@ namespace WebApplication_2_ALM_test_1.Services
         // Метод для добавления нового проекта
         public void AddOrganisation(Organisation organisation)
         {
+            var validationError = organisation.Validate();
+            if (validationError != null)
+            {
+                throw new ArgumentException(validationError);
+            }
+
             _organisationRepository.AddOrganisation(organisation);
         }
 
         // Метод для обновления существующего проекта
         public void UpdateOrganisation(int organisationId, Organisation organisation)
         {
+            var validationError = organisation.Validate();
+            if (validationError != null)
+            {
+                throw new ArgumentException(validationError);
+            }
+
             _organisationRepository.UpdateOrganisation(organisationId, organisation);
         }
 

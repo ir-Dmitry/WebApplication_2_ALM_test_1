@@ -26,7 +26,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Отобразить профиль сотрудника.
+        /// Отобразить профиль сотрудника.Страница профиля
         /// </summary>
         [HttpGet]
         [Route("GetProfileByEmployeeId/{employeeId}")]
@@ -45,7 +45,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Отобразить статус всех задач.
+        /// Отобразить статус всех задач.Страница профиля
         /// </summary>
         [HttpGet]
         [Route("GetProfileStatusTask")]
@@ -64,7 +64,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Отобразить мои задачи.
+        /// Отобразить мои задачи. Страница профиля
         /// </summary>
         [HttpGet]
         [Route("GetProfileTask/{employeeId}")]
@@ -83,7 +83,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить Id профиля.
+        /// Получить Id профиля. Для авторизации
         /// </summary>
         [HttpGet]
         [Route("GetProfile/{phoneNumber}/{employeeId}")]

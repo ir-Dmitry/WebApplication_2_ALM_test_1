@@ -16,17 +16,22 @@ namespace WebApplication_2_ALM_test_1.Repository
             _database = database;
         }
 
-        public IEnumerable<TaskIdDto> GetTaskById()
+        public IEnumerable<TaskIdDto> GetTaskById(int projectId)
         {
-            string query = @"SELECT t.id_task, t.task_name, s.status_name, t.date_of_end
+            string query = @"SELECT p.project_name, s.step_name, t.id_task, t.task_name, ss.status_name, t.date_of_end
                                     FROM tasks as t
-                                    join _status as s on s.id_status=t.id_status";
+                                    join _status as ss on ss.id_status=t.id_status
+                                    join steps as s on s.id_step=t.id_step
+                                    join projects as p on p.id_project=s.id_project
+                                    where p.id_project=@ProjectId";
 
             var tasks = new List<TaskIdDto>();
 
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
             command.CommandText = query;
+
+            command.Parameters.AddWithValue("@ProjectId", projectId);
 
             using var reader = command.ExecuteReader();
 

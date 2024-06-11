@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebApplication_2_ALM_test_1.DTO;
 using WebApplication_2_ALM_test_1.Models;
@@ -35,12 +36,24 @@ namespace WebApplication_2_ALM_test_1.Services
         // Метод для добавления нового проекта
         public void AddProject(Project project)
         {
+            string validationError = project.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
+
             _projectRepository.AddProject(project);
         }
 
         // Метод для обновления существующего проекта
         public void UpdateProject(int projectId, Project project)
         {
+            string validationError = project.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
+
             _projectRepository.UpdateProject(projectId, project);
         }
 

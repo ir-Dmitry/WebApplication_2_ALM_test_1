@@ -26,7 +26,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список сотрудников и их ID.
+        /// Получить список сотрудников и их ID. Для вывпадающего списка
         /// </summary>
         [HttpGet]
         [Route("GetIdEmployee")]

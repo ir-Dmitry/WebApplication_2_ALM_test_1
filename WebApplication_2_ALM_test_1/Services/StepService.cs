@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WebApplication_2_ALM_test_1.DTO;
 using WebApplication_2_ALM_test_1.Models;
@@ -23,20 +24,30 @@ namespace WebApplication_2_ALM_test_1.Services
                 .ToDictionary(x => x.index + 1, x => x.step);
         }
 
-        public StepIdDto GetIdSteps(int stepId)
+        public StepIdDto GetStepById(int stepId)
         {
-            return _stepRepository.GetIdSteps(stepId);
+            return _stepRepository.GetStepById(stepId);
         }
 
         // Метод для добавления нового проекта
         public void AddStep(Step step)
         {
+            string validationError = step.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
             _stepRepository.AddStep(step);
         }
 
         // Метод для обновления существующего проекта
         public void UpdateStep(int stepId, Step step)
         {
+            string validationError = step.ValidateDates();
+            if (validationError != null)
+            {
+                throw new ValidationException(validationError);
+            }
             _stepRepository.UpdateStep(stepId, step);
         }
 

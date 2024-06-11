@@ -26,16 +26,16 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить название проекта.
+        /// Получить список задачь(статус, дата) по проекту. Для страницы управление задачами.
         /// </summary>
         [HttpGet]
         [Route("GetTaskById")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskIdDto>))]
-        public IActionResult GetTaskById()
+        public IActionResult GetTaskById(int projectId)
         {
             try
             {
-                var tasks = _taskService.GetTaskById();
+                var tasks = _taskService.GetTaskById(projectId);
                 return Ok(tasks);
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список задач.
+        /// Получить список задач. Все задачи
         /// </summary>
         [HttpGet]
         [Route("GetTask")]
@@ -57,7 +57,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Добавить проект.
+        /// Добавить задачу.
         /// </summary>
         [HttpPost]
         [Route("AddTask")]
@@ -75,7 +75,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Обновить проект.
+        /// Обновить задачу.
         /// </summary>
         [HttpPut]
         [Route("UpdateTask")]
@@ -93,7 +93,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Удалить проект.
+        /// Удалить задачу.
         /// </summary>
         [HttpDelete]
         [Route("DeleteTask/{taskId}")]

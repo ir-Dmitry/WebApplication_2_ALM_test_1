@@ -26,7 +26,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список организаций и их ID.
+        /// Получить список организаций и их ID. Для выпадающего списка
         /// </summary>
         [HttpGet]
         [Route("GetIdOrganisation")]

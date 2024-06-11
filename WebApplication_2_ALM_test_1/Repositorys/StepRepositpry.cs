@@ -54,11 +54,11 @@ namespace WebApplication_2_ALM_test_1.Repository
             }
         }
 
-        public StepIdDto GetIdSteps(int stepId)
+        public StepIdDto GetStepById(int stepId)
         {
             string query = @"SELECT s.id_step, s.step_name
                                     FROM steps AS s
-                                    where p.id_step = @stepId";
+                                    where s.id_step = @stepId";
 
             var steps = new StepIdDto();
 

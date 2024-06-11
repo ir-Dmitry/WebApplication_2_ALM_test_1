@@ -30,12 +30,22 @@ namespace WebApplication_2_ALM_test_1.Services
         // Метод для добавления нового проекта
         public void AddEmployee(Employee employee)
         {
+            var validationError = employee.Validate();
+            if (validationError != null)
+            {
+                throw new ArgumentException(validationError);
+            }
             _employeeRepository.AddEmployee(employee);
         }
 
         // Метод для обновления существующего проекта
         public void UpdateEmployee(int employeeId, Employee employee)
         {
+            var validationError = employee.Validate();
+            if (validationError != null)
+            {
+                throw new ArgumentException(validationError);
+            }
             _employeeRepository.UpdateEmployee(employeeId, employee);
         }
 
