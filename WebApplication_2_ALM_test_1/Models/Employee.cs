@@ -21,7 +21,7 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Идентификатор должности сотрудника.
         /// </summary>
-        public int IdPost { get; set; }
+        public int? IdPost { get; set; }
 
         /// <summary>
         /// Организация, к которой принадлежит сотрудник.
@@ -33,7 +33,7 @@ namespace WebApplication_2_ALM_test_1.Models
         /// Должность сотрудника.
         /// </summary>
         [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
-        public virtual Post Post { get; set; }
+        public virtual Post? Post { get; set; }
 
         /// <summary>
         /// Имя сотрудника.

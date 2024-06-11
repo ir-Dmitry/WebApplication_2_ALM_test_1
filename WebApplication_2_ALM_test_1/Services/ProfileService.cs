@@ -14,9 +14,27 @@ namespace WebApplication_2_ALM_test_1.Services
             _profileRepository = ProfileRepository;
         }
 
-        public IEnumerable<ProfileDto> GetProfileByEmployeeId(int employeeId)
+        public ProfileDto GetProfileByEmployeeId(int employeeId)
         {
             return _profileRepository.GetProfileByEmployeeId(employeeId);
+        }
+
+        public IEnumerable<TaskIdDto> GetProfileStatusTask()
+        {
+            return _profileRepository.GetProfileStatusTask();
+        }
+
+        public Dictionary<int, ProfileTaskDto> GetProfileTask(int employeeId)
+        {
+            var projects = _profileRepository.GetProfileTask(employeeId);
+            return projects
+                .Select((project, index) => new { project, index })
+                .ToDictionary(x => x.index + 1, x => x.project);
+        }
+
+        public int GetProfile(string phoneNumber, int employeeId)
+        {
+            return _profileRepository.GetProfile(phoneNumber, employeeId);
         }
     }
 }

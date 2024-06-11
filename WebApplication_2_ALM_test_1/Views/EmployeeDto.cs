@@ -22,7 +22,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Название должности.
         /// </summary>
-        public string Post { get; set; }
+        public string? Post { get; set; }
 
         /// <summary>
         /// Имя сотрудника.

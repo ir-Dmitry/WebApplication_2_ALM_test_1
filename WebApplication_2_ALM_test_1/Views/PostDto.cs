@@ -15,11 +15,6 @@ namespace WebApplication_2_ALM_test_1.DTO
         public int Id { get; set; }
 
         /// <summary>
-        /// Статус должности.
-        /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
         /// Рабочее время должности (в часах).
         /// </summary>
         public byte WorkTime { get; set; }
@@ -32,7 +27,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Описание должности.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Заработная плата по должности.

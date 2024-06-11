@@ -15,12 +15,12 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Статус задачи.
         /// </summary>
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         /// <summary>
         /// Сотрудник, назначенный на задачу.
         /// </summary>
-        public string Employee { get; set; }
+        public string? Employee { get; set; }
 
         /// <summary>
         /// Наименование задачи.
@@ -30,7 +30,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Описание задачи.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Дата начала выполнения задачи.
@@ -62,6 +62,14 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// Наименование задачи.
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Статус задачи.
+        /// </summary>
+        public string? Status { get; set; }
+        /// <summary>
+        /// Дата завершения выполнения задачи.
+        /// </summary>
+        public string? EndDate { get; set; }
     }
 
 }

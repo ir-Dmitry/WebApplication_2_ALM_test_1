@@ -14,6 +14,78 @@ namespace WebApplication_2_ALM_test_1.Repository
         {
             _database = database;
         }
+        public ProjectIdDto GetProjectById(int projectId)
+        {
+            string query = @"SELECT p.id_project, p.project_name
+                                    FROM projects as p
+                                    where p.id_project=@projectId";
+
+            var project = new ProjectIdDto();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            command.Parameters.AddWithValue("@projectId", projectId);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    project = new ProjectIdDto
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1)
+                    };
+                }
+                return project;
+            }
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
+        }
+
+        public IEnumerable<ProjectIdDto> GetIdProjects()
+        {
+            string query = @"SELECT p.id_project, p.project_name, count(task_name) as task_amount
+                                    FROM projects as p
+                                    left join steps as s on s.id_project=p.id_project
+                                    left join tasks as t on t.id_step=s.id_step
+                                    group by p.id_project, p.project_name";
+            
+            var projects = new List<ProjectIdDto>();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.HasRows) 
+            { 
+                while (reader.Read())
+                {
+                    var project = new ProjectIdDto
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Amount = reader.GetInt32(2)
+                    };
+                    projects.Add(project);
+                }
+                return projects;
+            }
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
+        }
+
 
         public IEnumerable<ProjectDto> GetAllProjects()
         {
@@ -52,12 +124,9 @@ namespace WebApplication_2_ALM_test_1.Repository
             else
             {
                 // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
-                throw new Exception("Проекты не найдены.");
+                throw new Exception("Не удалось найти данные.");
             }
         }
-
-
-
 
         public void AddProject(Project project)
         {
@@ -79,12 +148,9 @@ namespace WebApplication_2_ALM_test_1.Repository
 
             if (rowsAffected == 0)
             {
-                throw new Exception("Не добавить обновить проект");
+                throw new Exception("Не удалось добавить данные.");
             }
         }
-
-
-
 
         public void UpdateProject(int projectId, Project project)
         {
@@ -93,26 +159,27 @@ namespace WebApplication_2_ALM_test_1.Repository
                                         project_name = @Name, 
                                         project_description = @Description, 
                                         date_of_start = @StartDate, 
-                                        date_of_end = @EndDate
+                                        date_of_end = @EndDate,
+                                        planed_budget = @PlannedBudget
                                     WHERE id_project = @ProjectId";
 
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
             command.CommandText = query;
 
-            command.Parameters.AddWithValue("@Status", project.Status);
+            command.Parameters.AddWithValue("@Status", project.IdStatus);
             command.Parameters.AddWithValue("@Name", project.Name);
             command.Parameters.AddWithValue("@Description", project.Description);
             command.Parameters.AddWithValue("@StartDate", project.StartDate);
             command.Parameters.AddWithValue("@EndDate", project.EndDate);
-            //command.Parameters.AddWithValue("@PlannedBudget", project.PlannedBudget);
+            command.Parameters.AddWithValue("@PlannedBudget", project.PlannedBudget);
             command.Parameters.AddWithValue("@ProjectId", projectId);
 
             int rowsAffected = command.ExecuteNonQuery();
 
             if (rowsAffected == 0)
             {
-                throw new Exception("Не удалось обновить проект");
+                throw new Exception("Не удалось обновить данные.");
             }
         }
 
@@ -131,36 +198,8 @@ namespace WebApplication_2_ALM_test_1.Repository
 
             if (rowsAffected == 0)
             {
-                throw new Exception("Проект с указанным идентификатором не найден");
+                throw new Exception("Не удалось удалить данные.");
             }
-        }
-
-
-        public IEnumerable<ProjectIdDto> GetIdProjects()
-        {
-            string query = @"SELECT p.id_project, p.project_name
-                                    FROM projects as p";
-            
-            var projects = new List<ProjectIdDto>();
-
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
-
-            using var reader = command.ExecuteReader();
-
-
-            while (reader.Read())
-            {
-                var project = new ProjectIdDto
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1)
-                };
-
-                projects.Add(project);
-            }
-            return projects;
         }
     }
 }

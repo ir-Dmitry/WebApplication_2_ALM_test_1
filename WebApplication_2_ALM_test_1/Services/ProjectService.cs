@@ -14,13 +14,22 @@ namespace WebApplication_2_ALM_test_1.Services
         {
             _projectRepository = projectRepository;
         }
+        public IEnumerable<ProjectIdDto> GetIdProjects()
+        {
+            return _projectRepository.GetIdProjects();
+        }
+
+        public ProjectIdDto GetProjectById(int projectId)
+        {
+            return _projectRepository.GetProjectById(projectId);
+        }
 
         public Dictionary<int, ProjectDto> GetAllProjects()
         {
             var projects = _projectRepository.GetAllProjects();
             return projects
                 .Select((project, index) => new { project, index })
-                .ToDictionary(x => x.index, x => x.project);
+                .ToDictionary(x => x.index + 1, x => x.project);
         }
 
         // Метод для добавления нового проекта
@@ -39,12 +48,6 @@ namespace WebApplication_2_ALM_test_1.Services
         public void DeleteProject(int projectId)
         {
             _projectRepository.DeleteProject(projectId);
-        }
-
-
-        public IEnumerable<ProjectIdDto> GetIdProjects()
-        {
-            return _projectRepository.GetIdProjects();
         }
     }
 }

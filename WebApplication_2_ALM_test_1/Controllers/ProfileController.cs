@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using WebApplication_2_ALM_test_1.DTO;
+using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Services;
 
 namespace WebApplication_2_ALM_test_1.Controllers
@@ -28,12 +29,77 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// Отобразить профиль сотрудника.
         /// </summary>
         [HttpGet]
-        [Route("GetProfile/{employeeId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileDto>))]
-        public IActionResult GetProfiles(int employeeId)
+        [Route("GetProfileByEmployeeId/{employeeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileDto))]
+        public IActionResult GetProfileByEmployeeId(int employeeId)
         {
-            var profiles = _profileService.GetProfileByEmployeeId(employeeId);
-            return Ok(profiles);
+            try
+            {
+                var profiles = _profileService.GetProfileByEmployeeId(employeeId);
+                return Ok(profiles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Отобразить статус всех задач.
+        /// </summary>
+        [HttpGet]
+        [Route("GetProfileStatusTask")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskIdDto>))]
+        public IActionResult GetProfileStatusTask()
+        {
+            try
+            {
+                var profiles = _profileService.GetProfileStatusTask();
+                return Ok(profiles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Отобразить мои задачи.
+        /// </summary>
+        [HttpGet]
+        [Route("GetProfileTask/{employeeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProfileTaskDto>))]
+        public IActionResult GetProfileTask(int employeeId)
+        {
+            try
+            {
+                var profiles = _profileService.GetProfileTask(employeeId);
+                return Ok(profiles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Получить Id профиля.
+        /// </summary>
+        [HttpGet]
+        [Route("GetProfile/{phoneNumber}/{employeeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileIdDto))]
+
+        public IActionResult GetProfile(string phoneNumber, int employeeId)
+        {
+            try
+            {
+                var projects = _profileService.GetProfile(phoneNumber, employeeId);
+                return Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
         }
     }
 }

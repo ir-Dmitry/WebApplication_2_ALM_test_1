@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using WebApplication_2_ALM_test_1.DTO;
+using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Services;
 
 namespace WebApplication_2_ALM_test_1.Controllers
@@ -25,6 +26,25 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
+        /// Получить название этапа.
+        /// </summary>
+        [HttpGet]
+        [Route("GetIdStep/{stepId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StepIdDto>))]
+        public IActionResult GetSteps(int stepId)
+        {
+            try
+            {
+                var steps = _stepService.GetIdSteps(stepId);
+                return Ok(steps);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Получить список этапов.
         /// </summary>
         [HttpGet]
@@ -32,20 +52,69 @@ namespace WebApplication_2_ALM_test_1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StepDto>))]
         public IActionResult GetSteps()
         {
-            var steps = _stepService.GetAllSteps();
-            return Ok(steps);
+            try
+            {
+                var steps = _stepService.GetAllSteps();
+                return Ok(steps);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
         }
 
         /// <summary>
-        /// Получить список этапов.
+        /// Добавить этап. Переделать на зависимый от ID проекта
         /// </summary>
-        [HttpGet]
-        [Route("GetIdStep/{projectId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StepDto>))]
-        public IActionResult GetSteps(int projectId)
+        [HttpPost]
+        [Route("AddStep")]
+        public IActionResult AddStep([FromBody] Step step)
         {
-            var steps = _stepService.GetIdSteps(projectId);
-            return Ok(steps);
+            try
+            {
+                _stepService.AddStep(step);
+                return Ok("Данные успешно добавлены");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка добавления данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Обновить этап.
+        /// </summary>
+        [HttpPut]
+        [Route("UpdateStep")]
+        public IActionResult UpdateStep(int stepId, Step step)
+        {
+            try
+            {
+                _stepService.UpdateStep(stepId, step);
+                return Ok($"Данные успешно обновлены.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка обновления данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Удалить этап.
+        /// </summary>
+        [HttpDelete]
+        [Route("DeleteStep/{stepId}")]
+        public IActionResult DeleteStep(int stepId)
+        {
+            try
+            {
+                _stepService.DeleteStep(stepId);
+                return Ok($"Данные успешно удалены.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка удаления данных: {ex.Message}");
+            }
         }
     }
 }

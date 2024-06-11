@@ -14,34 +14,150 @@ namespace WebApplication_2_ALM_test_1.Repository
             _database = database;
         }
 
-        public IEnumerable<ProfileDto> GetProfileByEmployeeId(int employeeId)
+        public ProfileDto GetProfileByEmployeeId(int employeeId)
         {
-            var profiles = new List<ProfileDto>();
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = @"SELECT e.employees_name, p.post_name, e.phone_number, e.email
+            string query = @"SELECT e.employees_name, p.post_name, e.phone_number, e.email
                             FROM employees as e
                             join posts as p on p.id_post = e.id_post
-                            where e.id_employee = @EmployeeId";
+                            where e.id_employee = @employeeId";
 
-            command.Parameters.AddWithValue("@EmployeeId", employeeId);
+            var project = new ProfileDto();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            command.Parameters.AddWithValue("@employeeId", employeeId);
 
             using var reader = command.ExecuteReader();
 
-
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                var profile = new ProfileDto
+                while (reader.Read())
                 {
-                    EmployeeName = reader.GetString(0), // Получаем значение столбца "profile_name"
-                    Post = reader.GetString(1), // Получаем значение столбца "profile_description"
-                    PhoneNumber = reader.GetString(2),
-                    Email = reader.GetString(3)
-                };
-
-                profiles.Add(profile);
+                    project = new ProfileDto
+                    {
+                        EmployeeName = reader.GetString(0),
+                        Post = reader.GetString(1),
+                        PhoneNumber = reader.GetString(2),
+                        Email = reader.GetString(3),
+                    };
+                }
+                return project;
             }
-            return profiles;
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
+        }
+
+
+        public IEnumerable<TaskIdDto> GetProfileStatusTask()
+        {
+            string query = @"SELECT t.id_task, t.task_name, s.status_name, t.date_of_end
+                                    FROM tasks as t
+                                    join _status as s on s.id_status=t.id_status";
+
+            var tasks = new List<TaskIdDto>();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var task = new TaskIdDto
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Status = reader.GetString(2),
+                        EndDate = reader.GetDateTime(3).ToString("dd.MM.yyyy")
+                    };
+                    tasks.Add(task);
+                }
+                return tasks;
+            }
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
+        }
+
+        internal IEnumerable<ProfileTaskDto> GetProfileTask(int employeeId)
+        {
+            string query = @"select t.task_name, p.project_name, ss.status_name
+							from tasks as t
+							join _status as ss on ss.id_status=t.id_status
+							join steps as s on s.id_step=t.id_step
+							join projects as p on p.id_project=s.id_project
+							where t.id_employee = @employeeId";
+
+            var projects = new List<ProfileTaskDto>();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            command.Parameters.AddWithValue("@employeeId", employeeId);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    var project = new ProfileTaskDto
+                    {
+                        Name = reader.GetString(0),
+                        Project = reader.GetString(1),
+                        Status = reader.GetString(2)
+                    };
+                    projects.Add(project);
+                }
+                return projects;
+            }
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
+        }
+        internal int GetProfile(string phoneNumber, int employeeId)
+        {
+            string query = @"SELECT e.id_employee
+                            FROM employees as e
+                            where e.id_employee = @EmployeeId and e.phone_number = @PhoneNumber";
+
+            var profile = new int();
+
+            using var connection = _database.CreateConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+
+            command.Parameters.AddWithValue("@EmployeeId", employeeId);
+            command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    profile = reader.GetInt32(0);
+                }
+                return profile;
+            }
+            else
+            {
+                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
+                throw new Exception("Не удалось найти данные.");
+            }
         }
     }
 }

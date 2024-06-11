@@ -17,7 +17,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Статус шага проекта.
         /// </summary>
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         /// <summary>
         /// Наименование шага проекта.
@@ -27,7 +27,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Описание шага проекта.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Дата начала шага проекта.
@@ -42,7 +42,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Планируемый бюджет для шага проекта.
         /// </summary>
-        public string PlunedBudget { get; set; }
+        public string? PlunedBudget { get; set; }
 
         /// <summary>
         /// Список этапов, связанных с этим проектом. Может быть null.

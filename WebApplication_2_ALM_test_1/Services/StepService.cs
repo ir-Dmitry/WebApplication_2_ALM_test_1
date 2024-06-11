@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebApplication_2_ALM_test_1.DTO;
+using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Repository;
 
 namespace WebApplication_2_ALM_test_1.Services
@@ -19,12 +20,30 @@ namespace WebApplication_2_ALM_test_1.Services
             var steps = _stepRepository.GetAllSteps();
             return steps
                 .Select((step, index) => new { step, index })
-                .ToDictionary(x => x.index, x => x.step);
+                .ToDictionary(x => x.index + 1, x => x.step);
         }
 
-        public IEnumerable<StepIdDto> GetIdSteps(int projectId)
+        public StepIdDto GetIdSteps(int stepId)
         {
-            return _stepRepository.GetIdSteps(projectId);
+            return _stepRepository.GetIdSteps(stepId);
+        }
+
+        // Метод для добавления нового проекта
+        public void AddStep(Step step)
+        {
+            _stepRepository.AddStep(step);
+        }
+
+        // Метод для обновления существующего проекта
+        public void UpdateStep(int stepId, Step step)
+        {
+            _stepRepository.UpdateStep(stepId, step);
+        }
+
+        // Метод для удаления проекта
+        public void DeleteStep(int stepId)
+        {
+            _stepRepository.DeleteStep(stepId);
         }
     }
 }

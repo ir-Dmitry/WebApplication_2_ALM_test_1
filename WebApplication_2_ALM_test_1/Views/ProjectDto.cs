@@ -17,7 +17,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Статус проекта.
         /// </summary>
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         /// <summary>
         /// Наименование проекта.
@@ -27,7 +27,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Описание проекта.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Дата начала проекта.
@@ -42,7 +42,7 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// <summary>
         /// Запланированный бюджет проекта.
         /// </summary>
-        public string PlunedBudget { get; set; }
+        public string? PlunedBudget { get; set; }
 
         /// <summary>
         /// Список этапов, связанных с этим проектом. Может быть null.
@@ -52,7 +52,7 @@ namespace WebApplication_2_ALM_test_1.DTO
     }
 
     /// <summary>
-    /// DTO, представляющий проект с идентификатором.
+    /// DTO, представляющий проект с идентификатором и числом задач.
     /// </summary>
     public class ProjectIdDto
     {
@@ -67,7 +67,12 @@ namespace WebApplication_2_ALM_test_1.DTO
         public string Name { get; set; }
 
         /// <summary>
-        /// Список этапов, связанных с этим проектом. Может быть null.
+        /// Количество задач в проекте.
+        /// </summary>
+        public int? Amount { get; set; }
+
+        /// <summary>
+        /// Список этапов, связанных с этим проектом.
         /// </summary>
         [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
         public List<Step>? Step { get; set; }

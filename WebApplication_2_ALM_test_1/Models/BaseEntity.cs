@@ -34,14 +34,13 @@ namespace WebApplication_2_ALM_test_1.Models
         /// Описание сущности.
         /// </summary>
         public string Description { get; set; }
-
         /// <summary>
-        /// Дата начала.
+        /// Дата начала. Дата в формате [1111-11-11]
         /// </summary>
         public string StartDate { get; set; }
 
         /// <summary>
-        /// Дата окончания.
+        /// Дата окончания. Дата в формате [1111-11-11]
         /// </summary>
         public string EndDate { get; set; }
     }

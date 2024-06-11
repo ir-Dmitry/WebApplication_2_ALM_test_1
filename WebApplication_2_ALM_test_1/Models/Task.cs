@@ -21,7 +21,7 @@ namespace WebApplication_2_ALM_test_1.Models
         /// Этап, к которому относится эта задача.
         /// </summary>
         [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
-        public virtual Step Step { get; set; }
+        public virtual Step? Step { get; set; }
 
         /// <summary>
         /// Сотрудник, назначенный на выполнение этой задачи.

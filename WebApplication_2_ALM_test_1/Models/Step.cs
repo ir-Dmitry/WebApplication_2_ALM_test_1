@@ -11,18 +11,18 @@ namespace WebApplication_2_ALM_test_1.Models
         /// <summary>
         /// Идентификатор проекта, к которому относится этот шаг.
         /// </summary>
-        public int IdPoject { get; set; }
+        public int IdProject { get; set; }
 
         /// <summary>
         /// Проект, к которому относится этот этап.
         /// </summary>
         [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
-        public virtual Project Project { get; set; }
+        public virtual Project? Project { get; set; }
 
         /// <summary>
-        /// Планируемый бюджет для этого этапа.
+        /// Планируемый бюджет для этого этапа. Точность до двух знаков после запятой.        /// 
         /// </summary>
-        public string? PlannedBudget { get; set; }
+        public decimal? PlannedBudget { get; set; }
 
         /// <summary>
         /// Список задач, связанных с этим этапом.

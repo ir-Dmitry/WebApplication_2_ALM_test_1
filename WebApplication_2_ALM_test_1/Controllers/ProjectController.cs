@@ -81,15 +81,41 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список проектов.
+        /// Получить список проектов и их ID. Также выводит количество задач в рамках проекта.
         /// </summary>
         [HttpGet]
         [Route("GetIdProjects")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
         public IActionResult GetIdProjects()
         {
-            var projects = _projectService.GetIdProjects();
-            return Ok(projects);
+            try
+            {
+                var projects = _projectService.GetIdProjects();
+                return Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Получить название проекта.
+        /// </summary>
+        [HttpGet]
+        [Route("GetProjectById/{projectId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
+        public IActionResult GetProjectById(int projectId)
+        {
+            try
+            {
+                var projects = _projectService.GetProjectById(projectId);
+                return Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -100,27 +126,20 @@ namespace WebApplication_2_ALM_test_1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectDto>))]
         public IActionResult GetProjects()
         {
-            var projects = _projectService.GetAllProjects();
-            return Ok(projects);
+            try
+            {
+                var projects = _projectService.GetAllProjects();
+                return Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
         }
 
-
-
-        //[HttpPost]
-        //[Route("AddProject")]
-        //public IActionResult AddProject(Project project)
-        //{
-        //    try
-        //    {
-        //        _projectService.AddProject(project);
-        //        return Ok("Данные успешно добавлены.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest($"Ошибка при добавлении данных: {ex.Message}");
-        //    }
-        //}
-
+        /// <summary>
+        /// Добавить проект.
+        /// </summary>
         [HttpPost]
         [Route("AddProject")]
         public IActionResult AddProject([FromBody] Project project)
@@ -128,14 +147,17 @@ namespace WebApplication_2_ALM_test_1.Controllers
             try
             {
                 _projectService.AddProject(project);
-                return Ok("Проект успешно добавлен");
+                return Ok("Данные успешно добавлены");
             }
             catch (Exception ex)
             {
-                return BadRequest($"Ошибка при добавлении проекта: {ex.Message}");
+                return BadRequest($"Ошибка добавления данных: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Обновить проект.
+        /// </summary>
         [HttpPut]
         [Route("UpdateProject")]
         public IActionResult UpdateProject(int projectId, Project project)
@@ -147,14 +169,13 @@ namespace WebApplication_2_ALM_test_1.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Ошибка при обновлении данных: {ex.Message}");
+                return BadRequest($"Ошибка обновления данных: {ex.Message}");
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Удалить проект.
+        /// </summary>
         [HttpDelete]
         [Route("DeleteProject/{projectId}")]
         public IActionResult DeleteProject(int projectId)
@@ -166,7 +187,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Ошибка при удалении данных: {ex.Message}");
+                return BadRequest($"Ошибка удаления данных: {ex.Message}");
             }
         }
     }
