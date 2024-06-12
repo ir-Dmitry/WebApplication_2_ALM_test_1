@@ -15,7 +15,7 @@ namespace WebApplication_2_ALM_test_1.Services
         {
             _projectRepository = projectRepository;
         }
-        public IEnumerable<ProjectIdDto> GetIdProjects()
+        public IEnumerable<ProjectsIdDto> GetIdProjects()
         {
             return _projectRepository.GetIdProjects();
         }

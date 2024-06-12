@@ -25,30 +25,33 @@ VALUES
 
 INSERT INTO organisations (organisation_name, phone_number, email)
 VALUES 		
-    ('ABC Corporation',	 '123-456-7890',	 'info@abccorp.com'),
-    ('XYZ Industries',	 '456-789-0123',	 'contact@xyzindustries.com'),
-    ('Tech Solutions Inc.',	 '789-012-3456',	 'info@techsolutions.com'),
-    ('Global Bank',	 '321-654-9870',	 'customerservice@globalbank.com'),
-    ('Sunshine Hospital',	 '789-012-3456',	 'info@sunshinehospital.com'),
-    ('Green Energy LLC',	 '456-789-0123',	 'info@greenenergy.com'),
-    ('ABC Foundation',	 '123-456-7890',	 'info@abcfoundation.org'),
-    ('Silver Insurance Agency',	 '789-012-3456',	 'info@silverinsurance.com'),
-    ('Foodie Restaurant Group',	 '456-789-0123',	 'info@foodierestaurants.com'),
-    ('City Library',	 '321-654-9870',	 'info@citylibrary.gov')
+    ('ABC Corporation',	 '+1234567890',	 'info@abccorp.com'),
+    ('XYZ Industries',	 '+4567890123',	 'contact@xyzindustries.com'),
+    ('Tech Solutions Inc.',	 '+7890123456',	 'info@techsolutions.com'),
+    ('Global Bank',	 '+3216549870',	 'customerservice@globalbank.com'),
+    ('Sunshine Hospital',	 '+7890123456',	 'info@sunshinehospital.com'),
+    ('Green Energy LLC',	 '+4567890123',	 'info@greenenergy.com'),
+    ('ABC Foundation',	 '+1234567890',	 'info@abcfoundation.org'),
+    ('Silver Insurance Agency',	 '+7890123456',	 'info@silverinsurance.com'),
+    ('Foodie Restaurant Group',	 '+4567890123',	 'info@foodierestaurants.com'),
+    ('City Library',	 '+3216549870',	 'info@citylibrary.gov')
 
+    INSERT INTO employees (id_organisation, id_post, employees_name,phone_number, email, _admin)
+VALUES 				
+    (3, 2, 'Al-Gunaid Mohamed Amin',	 '+7890113056',	 'Mohamed.Amin@example.com' , 1)
 
 INSERT INTO employees (id_organisation, id_post, employees_name,phone_number, email)
 VALUES 				
-    (3, 2, 'Michael Williams',	 '789-011-3456',	 'michael.williams@example.com'),
-    (1, 1, 'John Smith',	 '123-456-7810',	 'john.smith@example.com'),
-    (2, 3, 'Emily Johnson',	 '456-789-0163',	 'emily.johnson@example.com'),
-    (4, 4, 'Jessica Brown',	 '321-654-9820',	 'jessica.brown@example.com'),
-    (5, 5, 'David Miller',	 '789-012-6416',	 'david.miller@example.com'),
-    (6, 6, 'Sarah Davis',	 '456-789-0133',	 'sarah.davis@example.com'),
-    (7, 7, 'James Wilson',	 '123-456-7820',	 'james.wilson@example.com'),
-    (8, 8, 'Linda Moore',	 '789-012-3446',	 'linda.moore@example.com'),
-    (9, 9, 'William Taylor',	 '456-781-0123',	 'william.taylor@example.com'),
-    (10, 10, 'Emma Anderson',	 '321-653-9878',	 'emma.anderson@example.com')
+    (3, 2, 'Michael Williams',	 '+7890113456',	 'michael.williams@example.com'),
+    (1, 1, 'John Smith',	 '+1234567810',	 'john.smith@example.com'),
+    (2, 3, 'Emily Johnson',	 '+4567890163',	 'emily.johnson@example.com'),
+    (4, 4, 'Jessica Brown',	 '+3216549820',	 'jessica.brown@example.com'),
+    (5, 5, 'David Miller',	 '+7890126416',	 'david.miller@example.com'),
+    (6, 6, 'Sarah Davis',	 '+4567890133',	 'sarah.davis@example.com'),
+    (7, 7, 'James Wilson',	 '+1234567820',	 'james.wilson@example.com'),
+    (8, 8, 'Linda Moore',	 '+7890123446',	 'linda.moore@example.com'),
+    (9, 9, 'William Taylor',	 '+4567810123',	 'william.taylor@example.com'),
+    (10, 10, 'Emma Anderson',	 '+3216539878',	 'emma.anderson@example.com')
 
 
 

@@ -26,7 +26,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить название конкретного этапа. Для отображения на экране этапа
+        /// Получить расширенные данные этапа. Для отображения на экране этапа
         /// </summary>
         [HttpGet]
         [Route("GetStepById/{stepId}")]
@@ -45,16 +45,16 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список этапов.
+        /// Получить список этапов. Если не указан Id сотрудника возвращает все этапы на проекте
         /// </summary>
         [HttpGet]
-        [Route("GetStep")]
+        [Route("GetStepsByProjectAndEmployee/{projectId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StepDto>))]
-        public IActionResult GetSteps()
+        public IActionResult GetStepsByProjectAndEmployee(int projectId, [FromQuery] int? employeeId = null)
         {
             try
             {
-                var steps = _stepService.GetAllSteps();
+                var steps = _stepService.GetStepsByProjectAndEmployee(projectId, employeeId);
                 return Ok(steps);
             }
             catch (Exception ex)

@@ -16,14 +16,14 @@ namespace WebApplication_2_ALM_test_1.Services
             _TaskRepository = TaskRepository;
         }
 
-        public IEnumerable<TaskIdDto> GetTaskById(int projectId)
+        public IEnumerable<TaskIdDto> GetTaskById(int projectId, int? employeeId = null)
         {
-            return _TaskRepository.GetTaskById(projectId);
+            return _TaskRepository.GetTasksByProjectAndEmployee(projectId, employeeId);
         }
 
-        public Dictionary<int, TaskDto> GetAllTasks()
+        public Dictionary<int, TaskDto> GetTasksByStepAndEmployee(int stepId, int? employeeId = null)
         {
-            var tasks = _TaskRepository.GetAllTasks();
+            var tasks = _TaskRepository.GetTasksByStepAndEmployee(stepId, employeeId);
             return tasks
                 .Select((task, index) => new { task, index })
                 .ToDictionary(x => x.index + 1, x => x.task);

@@ -31,7 +31,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// </summary>
         [HttpGet]
         [Route("GetIdProjects")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectIdDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectsIdDto>))]
         public IActionResult GetIdProjects()
         {
             try
@@ -46,7 +46,7 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить название проекта. Для страницы эк.пр. созданный проект с 1 этап.
+        /// Получить расширенные данные проекта. Для страницы эк.пр. созданный проект с 1 этап.
         /// </summary>
         [HttpGet]
         [Route("GetProjectById/{projectId}")]

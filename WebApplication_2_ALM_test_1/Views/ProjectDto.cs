@@ -7,54 +7,23 @@ namespace WebApplication_2_ALM_test_1.DTO
     /// <summary>
     /// DTO, представляющий проект.
     /// </summary>
-    public class ProjectDto
+public class ProjectDto : BaseEntityDto
     {
-        /// <summary>
-        /// Идентификатор проекта.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Статус проекта.
         /// </summary>
         public string? Status { get; set; }
 
         /// <summary>
-        /// Наименование проекта.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Описание проекта.
         /// </summary>
         public string? Description { get; set; }
-
-        /// <summary>
-        /// Дата начала проекта.
-        /// </summary>
-        public string? StartDate { get; set; }
-
-        /// <summary>
-        /// Дата окончания проекта.
-        /// </summary>
-        public string? EndDate { get; set; }
-
-        /// <summary>
-        /// Запланированный бюджет проекта.
-        /// </summary>
-        public string? PlunedBudget { get; set; }
-
-        /// <summary>
-        /// Список этапов, связанных с этим проектом. Может быть null.
-        /// </summary>
-        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
-        public List<Step>? Step { get; set; }
     }
 
     /// <summary>
     /// DTO, представляющий проект с идентификатором и числом задач.
     /// </summary>
-    public class ProjectIdDto
+    public class ProjectsIdDto
     {
         /// <summary>
         /// Идентификатор проекта.
@@ -70,11 +39,20 @@ namespace WebApplication_2_ALM_test_1.DTO
         /// Количество задач в проекте.
         /// </summary>
         public int? Amount { get; set; }
+    }
 
+    /// <summary>
+    /// DTO, представляющий проект с идентификатором и числом задач.
+    /// </summary>
+    public class ProjectIdDto : BaseEntityDto
+    {
         /// <summary>
-        /// Список этапов, связанных с этим проектом.
+        /// Фактический бюджет.
         /// </summary>
-        [JsonIgnore] // Игнорируем свойства, которые создают избыточную вложенность.
-        public List<Step>? Step { get; set; }
+        public string? TaskReward { get; set; }
+        /// <summary>
+        /// Сотрудники на проекте.
+        /// </summary>
+        public string? Employees { get; set; }
     }
 }

@@ -29,13 +29,13 @@ namespace WebApplication_2_ALM_test_1.Controllers
         /// Получить список задачь(статус, дата) по проекту. Для страницы управление задачами.
         /// </summary>
         [HttpGet]
-        [Route("GetTaskById")]
+        [Route("GetTaskById/{projectId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskIdDto>))]
-        public IActionResult GetTaskById(int projectId)
+        public IActionResult GetTaskById(int projectId, [FromQuery] int? employeeId = null)
         {
             try
             {
-                var tasks = _taskService.GetTaskById(projectId);
+                var tasks = _taskService.GetTaskById(projectId, employeeId);
                 return Ok(tasks);
             }
             catch (Exception ex)
@@ -45,14 +45,14 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить список задач. Все задачи
+        /// Получить список задач под этапом. Все задачи если не указан сотрудник.
         /// </summary>
         [HttpGet]
-        [Route("GetTask")]
+        [Route("GetTask/{stepId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskDto>))]
-        public IActionResult GetTasks()
+        public IActionResult GetTasksByStepAndEmployee(int stepId, [FromQuery] int? employeeId = null)
         {
-            var tasks = _taskService.GetAllTasks();
+            var tasks = _taskService.GetTasksByStepAndEmployee(stepId, employeeId);
             return Ok(tasks);
         }
 

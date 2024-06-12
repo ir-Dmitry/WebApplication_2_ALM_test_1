@@ -16,9 +16,24 @@ namespace WebApplication_2_ALM_test_1.Repository
         }
         public ProjectIdDto GetProjectById(int projectId)
         {
-            string query = @"SELECT p.id_project, p.project_name
-                                    FROM projects as p
-                                    where p.id_project=@projectId";
+            string query = @"SELECT 
+                                pt.id_project, 
+                                pt.project_name, 
+                                pt.date_of_start, 
+                                pt.date_of_end, 
+                                pt.planed_budget, 
+                                SUM(p.salary / wt.work_time * t.task_time) AS task_reward,
+                                STRING_AGG(e.employees_name, ', ') AS employees                                    
+                            FROM projects AS pt
+                            left join steps as s on s.id_project=pt.id_project
+                            LEFT JOIN tasks AS t ON t.id_step = s.id_step
+                            LEFT JOIN employees AS e ON t.id_employee = e.id_employee
+                            LEFT JOIN posts AS p ON p.id_post = e.id_post
+                            LEFT JOIN work_time AS wt ON wt.id_work_time = p.id_work_time
+                            WHERE pt.id_project = @projectId
+                            GROUP BY pt.id_project, pt.project_name, pt.date_of_start, pt.date_of_end, pt.planed_budget
+
+";
 
             var project = new ProjectIdDto();
 
@@ -37,7 +52,12 @@ namespace WebApplication_2_ALM_test_1.Repository
                     project = new ProjectIdDto
                     {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1)
+                        Name = reader.GetString(1),
+                        StartDate = reader.GetDateTime(2).ToString("dd-MM-yyyy"),
+                        EndDate = reader.GetDateTime(3).ToString("dd-MM-yyyy"),
+                        PlanedBudget = reader.GetSqlDecimal(4).ToString(),
+                        TaskReward = reader.GetInt32(5).ToString(),
+                        Employees = reader.GetString(6)
                     };
                 }
                 return project;
@@ -49,7 +69,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             }
         }
 
-        public IEnumerable<ProjectIdDto> GetIdProjects()
+        public IEnumerable<ProjectsIdDto> GetIdProjects()
         {
             string query = @"SELECT p.id_project, p.project_name, count(task_name) as task_amount
                                     FROM projects as p
@@ -57,7 +77,7 @@ namespace WebApplication_2_ALM_test_1.Repository
                                     left join tasks as t on t.id_step=s.id_step
                                     group by p.id_project, p.project_name";
             
-            var projects = new List<ProjectIdDto>();
+            var projects = new List<ProjectsIdDto>();
 
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
@@ -69,7 +89,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             { 
                 while (reader.Read())
                 {
-                    var project = new ProjectIdDto
+                    var project = new ProjectsIdDto
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
@@ -114,7 +134,7 @@ namespace WebApplication_2_ALM_test_1.Repository
                         Description = reader.GetString(2),
                         StartDate = reader.GetDateTime(3).ToString("dd.MM.yyyy"),
                         EndDate = reader.GetDateTime(4).ToString("dd.MM.yyyy"),
-                        PlunedBudget = reader.GetSqlDecimal(5).ToString()
+                        PlanedBudget = reader.GetSqlDecimal(5).ToString()
                     };
 
                     projects.Add(project);

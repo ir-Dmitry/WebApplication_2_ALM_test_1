@@ -16,9 +16,9 @@ namespace WebApplication_2_ALM_test_1.Services
             _stepRepository = stepRepository;
         }
 
-        public Dictionary<int, StepDto> GetAllSteps()
+        public Dictionary<int, StepDto> GetStepsByProjectAndEmployee(int projectId, int? employeeId = null)
         {
-            var steps = _stepRepository.GetAllSteps();
+            var steps = _stepRepository.GetStepsByProjectAndEmployee(projectId, employeeId);
             return steps
                 .Select((step, index) => new { step, index })
                 .ToDictionary(x => x.index + 1, x => x.step);

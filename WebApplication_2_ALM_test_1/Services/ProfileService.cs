@@ -32,9 +32,15 @@ namespace WebApplication_2_ALM_test_1.Services
                 .ToDictionary(x => x.index + 1, x => x.project);
         }
 
-        public int GetProfile(string phoneNumber, int employeeId)
+        public Dictionary<string, object> GetProfile(string phoneNumber, int employeeId)
         {
-            return _profileRepository.GetProfile(phoneNumber, employeeId);
+            var (profile, admin) = _profileRepository.GetProfile(phoneNumber, employeeId);
+            return new Dictionary<string, object>
+            {
+                { "profile", profile },
+                { "admin", admin }
+            };
         }
+
     }
 }

@@ -89,7 +89,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             }
         }
 
-        internal IEnumerable<ProfileTaskDto> GetProfileTask(int employeeId)
+        public IEnumerable<ProfileTaskDto> GetProfileTask(int employeeId)
         {
             string query = @"select t.task_name, p.project_name, ss.status_name
 							from tasks as t
@@ -128,13 +128,11 @@ namespace WebApplication_2_ALM_test_1.Repository
                 throw new Exception("Не удалось найти данные.");
             }
         }
-        internal int GetProfile(string phoneNumber, int employeeId)
+        public (int profile, bool admin) GetProfile(string phoneNumber, int employeeId)
         {
-            string query = @"SELECT e.id_employee
-                            FROM employees as e
-                            where e.id_employee = @EmployeeId and e.phone_number = @PhoneNumber";
-
-            var profile = new int();
+            string query = @"SELECT e.id_employee, e._admin
+                    FROM employees as e
+                    WHERE e.id_employee = @EmployeeId AND e.phone_number = @PhoneNumber";
 
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
@@ -149,15 +147,13 @@ namespace WebApplication_2_ALM_test_1.Repository
             {
                 while (reader.Read())
                 {
-                    profile = reader.GetInt32(0);
+                    int profile = reader.GetInt32(0);
+                    bool admin = reader.GetBoolean(1);
+                    return (profile, admin);
                 }
-                return profile;
             }
-            else
-            {
-                // Если проект с указанным идентификатором не найден, возвращаем null или бросаем исключение
-                throw new Exception("Не удалось найти данные.");
-            }
+            throw new Exception("Failed to find the data.");
         }
+
     }
 }
