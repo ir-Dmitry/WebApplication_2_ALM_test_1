@@ -72,8 +72,8 @@ namespace WebApplication_2_ALM_test_1.Controllers
         {
             try
             {
-                _employeeService.AddEmployee(employee);
-                return Ok("Данные успешно добавлены");
+                var password = _employeeService.AddEmployee(employee);
+                return Ok($"Данные успешно добавлены. Пароль: {password}");
             }
             catch (Exception ex)
             {

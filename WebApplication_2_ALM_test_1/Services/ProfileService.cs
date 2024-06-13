@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebApplication_2_ALM_test_1.DTO;
+using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Repository;
 
 namespace WebApplication_2_ALM_test_1.Services
@@ -32,9 +33,12 @@ namespace WebApplication_2_ALM_test_1.Services
                 .ToDictionary(x => x.index + 1, x => x.project);
         }
 
-        public Dictionary<string, object> GetProfile(string phoneNumber, int employeeId)
+        public Dictionary<string, object> Authorization(string password, string? phoneNumber = null, string? email = null)
         {
-            var (profile, admin) = _profileRepository.GetProfile(phoneNumber, employeeId);
+            var auth = new Authoraze();
+            string PasswordHash = auth.ComputeSha256Hash(password);
+
+            var (profile, admin) = _profileRepository.Authorization(PasswordHash, phoneNumber, email);
             return new Dictionary<string, object>
             {
                 { "profile", profile },

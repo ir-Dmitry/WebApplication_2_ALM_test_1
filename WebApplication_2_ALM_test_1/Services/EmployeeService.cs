@@ -4,6 +4,7 @@ using WebApplication_2_ALM_test_1.DTO;
 using WebApplication_2_ALM_test_1.Models;
 using WebApplication_2_ALM_test_1.Repository;
 
+
 namespace WebApplication_2_ALM_test_1.Services
 {
     public class EmployeeService
@@ -28,14 +29,22 @@ namespace WebApplication_2_ALM_test_1.Services
         }
 
         // Метод для добавления нового проекта
-        public void AddEmployee(Employee employee)
+        public string AddEmployee(Employee employee)
         {
             var validationError = employee.Validate();
             if (validationError != null)
             {
                 throw new ArgumentException(validationError);
             }
-            _employeeRepository.AddEmployee(employee);
+            var auth = new Authoraze();
+
+            var password = auth.GenerateRandomPassword();
+            var PasswordHash = auth.ComputeSha256Hash(password);
+            // "ZRvaOVcis%&i"
+            // "35b240e8bced38ab04e9897e5911e6f6e65f6a54f9ea2fc335554856e7c220f9"
+
+            _employeeRepository.AddEmployee(employee, PasswordHash);
+            return password;
         }
 
         // Метод для обновления существующего проекта

@@ -1,6 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebApplication_2_ALM_test_1.Models
 {
@@ -50,6 +55,11 @@ namespace WebApplication_2_ALM_test_1.Models
         /// Адрес электронной почты сотрудника. Почта в формате example@examp.ex
         /// </summary>
         public string? Email { get; set; }
+
+        /// <summary>
+        /// Пароль сотрудника. Генерируется автоматически
+        /// </summary>
+        public string? PasswordHash { get; set; }
 
         /// <summary>
         /// Список задач, назначенных этому сотруднику.

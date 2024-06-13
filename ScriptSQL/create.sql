@@ -51,9 +51,10 @@ create table employees
 	id_organisation int,
 	id_post int,
 	employees_name nvarchar(100) not null, 
-    phone_number nvarchar(20) unique ,
+    phone_number nvarchar(20) unique,
     email nvarchar(320),
 	_admin bit Default(0),
+	password_hash VARCHAR(255)default('35b240e8bced38ab04e9897e5911e6f6e65f6a54f9ea2fc335554856e7c220f9')
 	--residence_address nvarchar(200),
 	--date_of_birth date default('11.11.1111'),
 	--gender nvarchar(10),

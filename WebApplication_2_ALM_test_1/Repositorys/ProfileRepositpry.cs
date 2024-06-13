@@ -2,6 +2,7 @@
 using WebApplication_2_ALM_test_1.DTO;
 using Microsoft.Data.SqlClient;
 using System.Net.NetworkInformation;
+using WebApplication_2_ALM_test_1.Models;
 
 namespace WebApplication_2_ALM_test_1.Repository
 {
@@ -128,18 +129,43 @@ namespace WebApplication_2_ALM_test_1.Repository
                 throw new Exception("Не удалось найти данные.");
             }
         }
-        public (int profile, bool admin) GetProfile(string phoneNumber, int employeeId)
+        public (int profile, bool admin) Authorization(string password, string? phoneNumber = null, string? email = null)
         {
             string query = @"SELECT e.id_employee, e._admin
                     FROM employees as e
-                    WHERE e.id_employee = @EmployeeId AND e.phone_number = @PhoneNumber";
+                    WHERE e.password_hash = @Password";
+
+            if (phoneNumber != null)
+            {
+                query += " AND e.phone_number = @PhoneNumber";
+
+            }
+            else if (email != null)
+            {
+                query += " AND e.email = @Email";
+
+            }
+            else
+                throw new Exception("Укажите данные авторизаци.");
 
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
             command.CommandText = query;
 
-            command.Parameters.AddWithValue("@EmployeeId", employeeId);
-            command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+            if (phoneNumber != null)
+            {
+                command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+            }
+            else if (email != null)
+            {
+                command.Parameters.AddWithValue("@Email", email);
+
+            }
+            else
+                throw new Exception("Укажите данные авторизаци.");
+
+            command.Parameters.AddWithValue("@Password", password);
 
             using var reader = command.ExecuteReader();
 
@@ -152,7 +178,7 @@ namespace WebApplication_2_ALM_test_1.Repository
                     return (profile, admin);
                 }
             }
-            throw new Exception("Failed to find the data.");
+            throw new Exception("Авторизация не удалась.");
         }
 
     }

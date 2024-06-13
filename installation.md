@@ -2,5 +2,5 @@
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/your-repository.git
+ 
+   git clone https://github.com/ir-Dmitry/WebApplication_2_ALM_test_1.git

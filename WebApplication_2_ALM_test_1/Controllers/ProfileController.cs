@@ -83,17 +83,17 @@ namespace WebApplication_2_ALM_test_1.Controllers
         }
 
         /// <summary>
-        /// Получить Id профиля. Для авторизации
+        /// Получить Id профиля и роль. Для авторизации P.s. после добавления сотрудника генерируется пароль.
         /// </summary>
         [HttpGet]
-        [Route("GetProfile/{phoneNumber}/{employeeId}")]
+        [Route("Authorization/{password}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProfileIdDto))]
 
-        public IActionResult GetProfile(string phoneNumber, int employeeId)
+        public IActionResult Authorization(string password, [FromQuery] string? phoneNumber = null, [FromQuery] string? email = null)
         {
             try
             {
-                var projects = _profileService.GetProfile(phoneNumber, employeeId);
+                var projects = _profileService.Authorization(password, phoneNumber, email);
                 return Ok(projects);
             }
             catch (Exception ex)
