@@ -32,8 +32,16 @@ namespace WebApplication_2_ALM_test_1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StatusDto>))]
         public IActionResult GetStatuss()
         {
-            var statuss = _statusService.GetIdStatus();
-            return Ok(statuss);
+
+            try
+            {
+                var statuss = _statusService.GetIdStatus();
+                return Ok(statuss);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка удаления данных: {ex.Message}");
+            }
         }
     }
 }

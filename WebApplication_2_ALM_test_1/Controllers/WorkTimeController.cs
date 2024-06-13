@@ -32,8 +32,15 @@ namespace WebApplication_2_ALM_test_1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<WorkTimeDto>))]
         public IActionResult GetWorkTimes()
         {
-            var workTimes = _workTimeService.GetIdWorkTime();
-            return Ok(workTimes);
+            try
+            {
+                var workTimes = _workTimeService.GetIdWorkTime();
+                return Ok(workTimes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка удаления данных: {ex.Message}");
+            }
         }
     }
 }

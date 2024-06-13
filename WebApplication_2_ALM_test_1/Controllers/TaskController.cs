@@ -52,8 +52,16 @@ namespace WebApplication_2_ALM_test_1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskDto>))]
         public IActionResult GetTasksByStepAndEmployee(int stepId, [FromQuery] int? employeeId = null)
         {
-            var tasks = _taskService.GetTasksByStepAndEmployee(stepId, employeeId);
-            return Ok(tasks);
+
+            try
+            {
+                var tasks = _taskService.GetTasksByStepAndEmployee(stepId, employeeId);
+                return Ok(tasks);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Ошибка отображения данных: {ex.Message}");
+            }
         }
 
         /// <summary>
