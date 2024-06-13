@@ -15,34 +15,38 @@ namespace WebApplication_2_ALM_test_1.Services
             _profileRepository = ProfileRepository;
         }
 
+        // Метод для получения профиля по идентификатору сотрудника
         public ProfileDto GetProfileByEmployeeId(int employeeId)
         {
-            return _profileRepository.GetProfileByEmployeeId(employeeId);
+            return _profileRepository.GetProfileByEmployeeId(employeeId); // Получение профиля сотрудника по его идентификатору через репозиторий
         }
 
+        // Метод для получения статуса профиля и задач
         public IEnumerable<TaskIdDto> GetProfileStatusTask()
         {
-            return _profileRepository.GetProfileStatusTask();
+            return _profileRepository.GetProfileStatusTask(); // Получение статуса профиля и задач через репозиторий
         }
 
+        // Метод для получения задач профиля сотрудника
         public Dictionary<int, ProfileTaskDto> GetProfileTask(int employeeId)
         {
-            var projects = _profileRepository.GetProfileTask(employeeId);
+            var projects = _profileRepository.GetProfileTask(employeeId); // Получение задач профиля сотрудника через репозиторий
             return projects
-                .Select((project, index) => new { project, index })
-                .ToDictionary(x => x.index + 1, x => x.project);
+                .Select((project, index) => new { project, index }) // Преобразование списка задач в анонимные объекты с индексом
+                .ToDictionary(x => x.index + 1, x => x.project); // Преобразование анонимных объектов в словарь, где ключ - индекс + 1, значение - задача профиля
         }
 
+        // Метод для авторизации пользователя
         public Dictionary<string, object> Authorization(string password, string? phoneNumber = null, string? email = null)
         {
-            var auth = new Authoraze();
-            string PasswordHash = auth.ComputeSha256Hash(password);
+            var auth = new Authoraze(); // Создание объекта для работы с авторизацией
+            string PasswordHash = auth.ComputeSha256Hash(password); // Хеширование пароля
 
-            var (profile, admin) = _profileRepository.Authorization(PasswordHash, phoneNumber, email);
+            var (profile, admin) = _profileRepository.Authorization(PasswordHash, phoneNumber, email); // Выполнение авторизации через репозиторий
             return new Dictionary<string, object>
             {
-                { "profile", profile },
-                { "admin", admin }
+                { "profile", profile }, // Возвращение профиля
+                { "admin", admin } // Возвращение признака администратора
             };
         }
 

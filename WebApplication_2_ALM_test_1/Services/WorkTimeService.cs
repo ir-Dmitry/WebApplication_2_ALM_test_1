@@ -11,12 +11,13 @@ namespace WebApplication_2_ALM_test_1.Services
 
         public WorkTimeService(WorkTimeRepository workTimeRepository)
         {
-            _workTimeRepository = workTimeRepository;
+            _workTimeRepository = workTimeRepository;// Инициализация репозитория норм рабочего времени через конструктор
         }
 
+        // Метод сервиса для получения идентификаторов и рабочего времени
         public IEnumerable<WorkTimeDto> GetIdWorkTime()
         {
-            return _workTimeRepository.GetIdWorkTime();
+            return _workTimeRepository.GetIdWorkTime(); // Вызов метода репозитория для получения данных о рабочем времени
         }
     }
 }

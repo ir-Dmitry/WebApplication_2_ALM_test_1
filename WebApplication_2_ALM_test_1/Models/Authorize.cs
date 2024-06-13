@@ -14,6 +14,11 @@ namespace WebApplication_2_ALM_test_1.Models
     /// </summary>
     public class Authoraze
     {
+        /// <summary>
+        /// Вычисляет SHA-256 хэш для входных данных.
+        /// </summary>
+        /// <param name="rawData">Исходные данные для вычисления хэша.</param>
+        /// <returns>Хэш в виде строки.</returns>
         public string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -23,12 +28,18 @@ namespace WebApplication_2_ALM_test_1.Models
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < bytes.Length; i++)
                 {
-                    builder.Append(bytes[i].ToString("x2"));
+                    builder.Append(bytes[i].ToString("x2")); // Преобразуем каждый байт в строку шестнадцатеричного формата и добавляем к результату
                 }
-                return builder.ToString();
+                return builder.ToString(); // Возвращаем строковое представление хэша
             }
         }
 
+        /// <summary>
+        /// Проверяет соответствие введенного значения хэшу SHA-256.
+        /// </summary>
+        /// <param name="input">Введенное значение для проверки.</param>
+        /// <param name="hash">Сохраненный хэш для сравнения.</param>
+        /// <returns>True, если введенное значение соответствует сохраненному хэшу; в противном случае - false.</returns>
         public bool VerifySha256Hash(string input, string hash)
         {
             // Вычисляем хэш введенного пароля
@@ -39,6 +50,11 @@ namespace WebApplication_2_ALM_test_1.Models
             return comparer.Compare(hashOfInput, hash) == 0;
         }
 
+        /// <summary>
+        /// Генерирует случайный пароль заданной длины.
+        /// </summary>
+        /// <param name="length">Длина пароля (по умолчанию 12 символов).</param>
+        /// <returns>Случайно сгенерированный пароль.</returns>
         public string GenerateRandomPassword(int length = 12)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
@@ -47,10 +63,10 @@ namespace WebApplication_2_ALM_test_1.Models
 
             while (0 < length--)
             {
-                password.Append(validChars[random.Next(validChars.Length)]);
+                password.Append(validChars[random.Next(validChars.Length)]); // Добавляем случайный символ из допустимых символов
             }
 
-            return password.ToString();
+            return password.ToString(); // Возвращаем сгенерированный пароль
         }
     }
 }

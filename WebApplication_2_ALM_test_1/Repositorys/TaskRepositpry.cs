@@ -16,6 +16,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             _database = database;
         }
 
+        // Метод для получения задач по проекту и сотруднику
         public IEnumerable<TaskIdDto> GetTasksByProjectAndEmployee(int projectId, int? employeeId = null)
         {
             string query = @"SELECT t.id_task, t.task_name, ss.status_name, t.date_of_end
@@ -33,33 +34,33 @@ namespace WebApplication_2_ALM_test_1.Repository
 
             var tasks = new List<TaskIdDto>();
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
             if (employeeId.HasValue && employeeId > 0)
             {
-                command.Parameters.AddWithValue("@employeeId", employeeId.Value);
+                command.Parameters.AddWithValue("@employeeId", employeeId.Value); // Добавление параметра employeeId
             }
-            
-            command.Parameters.AddWithValue("@ProjectId", projectId);
 
-            using var reader = command.ExecuteReader();
+            command.Parameters.AddWithValue("@ProjectId", projectId); // Добавление параметра projectId
 
-            if (reader.HasRows)
+            using var reader = command.ExecuteReader(); // Выполнение запроса и получение результатов
+
+            if (reader.HasRows) // Проверка наличия данных
             {
-                while (reader.Read())
+                while (reader.Read()) // Чтение данных из результата запроса
                 {
-                    var task = new TaskIdDto
+                    var task = new TaskIdDto // Создание объекта TaskIdDto для хранения данных о задаче
                     {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Status = reader.GetString(2),
-                        EndDate = reader.GetDateTime(3).ToString("dd.MM.yyyy")
+                        Id = reader.GetInt32(0), // Получение идентификатора задачи из первого столбца
+                        Name = reader.GetString(1), // Получение имени задачи из второго столбца
+                        Status = reader.GetString(2), // Получение статуса задачи из третьего столбца
+                        EndDate = reader.GetDateTime(3).ToString("dd.MM.yyyy") // Получение даты окончания задачи из четвертого столбца
                     };
-                    tasks.Add(task);
+                    tasks.Add(task); // Добавление задачи в список
                 }
-                return tasks;
+                return tasks; // Возврат списка задач
             }
             else
             {
@@ -68,6 +69,7 @@ namespace WebApplication_2_ALM_test_1.Repository
             }
         }
 
+        // Метод для получения задач по этапу и сотруднику
         public IEnumerable<TaskDto> GetTasksByStepAndEmployee(int stepId, int? employeeId = null)
         {
             // Базовый запрос
@@ -87,54 +89,56 @@ namespace WebApplication_2_ALM_test_1.Repository
 
             var tasks = new List<TaskDto>();
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
-            command.Parameters.AddWithValue("@stepId", stepId);
+            command.Parameters.AddWithValue("@stepId", stepId); // Добавление параметра stepId
+
             if (employeeId.HasValue && employeeId > 0)
             {
-                command.Parameters.AddWithValue("@employeeId", employeeId.Value);
+                command.Parameters.AddWithValue("@employeeId", employeeId.Value); // Добавление параметра employeeId
             }
 
-            using var reader = command.ExecuteReader();
+            using var reader = command.ExecuteReader(); // Выполнение запроса и получение результатов
 
-            if (reader.HasRows)
+            if (reader.HasRows) // Проверка наличия данных
             {
-                while (reader.Read())
+                while (reader.Read()) // Чтение данных из результата запроса
                 {
-                    var task = new TaskDto
+                    var task = new TaskDto // Создание объекта TaskDto для хранения данных о задаче
                     {
-                        Id = reader.GetInt32(7),
-                        Name = reader.GetString(0),
-                        Status = reader.GetString(1),
-                        Description = reader.GetString(2),
-                        Employee = reader.GetString(3),
-                        StartDate = reader.GetDateTime(4).ToString("dd.MM.yyyy"),
-                        EndDate = reader.GetDateTime(5).ToString("dd.MM.yyyy"),
-                        Reward = reader.GetInt32(6)
+                        Id = reader.GetInt32(7), // Получение идентификатора задачи из восьмого столбца
+                        Name = reader.GetString(0), // Получение имени задачи из первого столбца
+                        Status = reader.GetString(1), // Получение статуса задачи из второго столбца
+                        Description = reader.GetString(2), // Получение описания задачи из третьего столбца
+                        Employee = reader.GetString(3), // Получение имени сотрудника из четвертого столбца
+                        StartDate = reader.GetDateTime(4).ToString("dd.MM.yyyy"), // Получение даты начала задачи из пятого столбца
+                        EndDate = reader.GetDateTime(5).ToString("dd.MM.yyyy"), // Получение даты окончания задачи из шестого столбца
+                        Reward = reader.GetInt32(6) // Получение вознаграждения за задачу из седьмого столбца
                     };
 
-                    tasks.Add(task);
+                    tasks.Add(task); // Добавление задачи в список
                 }
-                return tasks;
+                return tasks; // Возврат списка задач
             }
             else
             {
-                throw new Exception("Не удалось найти данные.");
+                throw new Exception("Не удалось найти данные."); // Если данных нет, бросаем исключение
             }
         }
 
-
+        // Метод для добавления новой задачи
         public void AddTask(Models.Task task)
         {
             string query = @"INSERT INTO tasks (id_step, id_status, id_employee, task_name, task_description, date_of_start, date_of_end, task_time)
                                     VALUES (@IdStep, @IdStatus, @IdEmployee, @Name, @Description, @StartDate, @EndDate, @TaskTime)";
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
+            // Добавление параметров для запроса
             command.Parameters.AddWithValue("@IdStep", task.IdStep);
             command.Parameters.AddWithValue("@IdStatus", task.IdStatus);
             command.Parameters.AddWithValue("@IdEmployee", task.IdEmployee);
@@ -144,14 +148,15 @@ namespace WebApplication_2_ALM_test_1.Repository
             command.Parameters.AddWithValue("@EndDate", task.EndDate);
             command.Parameters.AddWithValue("@TaskTime", task.TaskTime);
 
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = command.ExecuteNonQuery(); // Выполнение запроса на добавление данных в таблицу
 
-            if (rowsAffected == 0)
+            if (rowsAffected == 0) // Проверка количества измененных строк
             {
-                throw new Exception("Не удалось добавить данные.");
+                throw new Exception("Не удалось добавить данные."); // Если данные не были добавлены, бросаем исключение
             }
         }
 
+        // Метод для обновления задачи по идентификатору задачи
         public void UpdateTask(int taskId, Models.Task task)
         {
             string query = @"UPDATE tasks 
@@ -165,10 +170,11 @@ namespace WebApplication_2_ALM_test_1.Repository
                                         task_time = @TaskTime
                                     WHERE id_task = @TaskId";
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
+            // Добавление параметров для запроса
             command.Parameters.AddWithValue("@TaskId", taskId);
             command.Parameters.AddWithValue("@IdStep", task.IdStep);
             command.Parameters.AddWithValue("@Status", task.IdStatus);
@@ -179,14 +185,15 @@ namespace WebApplication_2_ALM_test_1.Repository
             command.Parameters.AddWithValue("@EndDate", task.EndDate);
             command.Parameters.AddWithValue("@TaskTime", task.TaskTime);
 
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = command.ExecuteNonQuery(); // Выполнение запроса на обновление данных в таблице
 
-            if (rowsAffected == 0)
+            if (rowsAffected == 0) // Проверка количества измененных строк
             {
-                throw new Exception("Не удалось обновить данные.");
+                throw new Exception("Не удалось обновить данные."); // Если данные не были обновлены, бросаем исключение
             }
         }
 
+        // Метод для обновления задачи по идентификатору задачи сотрудника
         public void UpdateTaskByEmployee(int taskId, Models.Task task)
         {
             string query = @"UPDATE tasks 
@@ -200,10 +207,11 @@ namespace WebApplication_2_ALM_test_1.Repository
                                         task_time = @TaskTime
                                     WHERE id_task = @TaskId";
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
+            // Добавление параметров для запроса
             command.Parameters.AddWithValue("@TaskId", taskId);
             command.Parameters.AddWithValue("@IdStep", task.IdStep);
             command.Parameters.AddWithValue("@Status", task.IdStatus);
@@ -214,30 +222,32 @@ namespace WebApplication_2_ALM_test_1.Repository
             command.Parameters.AddWithValue("@EndDate", task.EndDate);
             command.Parameters.AddWithValue("@TaskTime", task.TaskTime);
 
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = command.ExecuteNonQuery(); // Выполнение запроса на обновление данных в таблице
 
-            if (rowsAffected == 0)
+            if (rowsAffected == 0) // Проверка количества измененных строк
             {
-                throw new Exception("Не удалось обновить данные.");
+                throw new Exception("Не удалось обновить данные."); // Если данные не были обновлены, бросаем исключение
             }
         }
 
+        // Метод для удаления задачи по идентификатору задачи
         public void DeleteTask(int taskId)
         {
             string query = @"DELETE FROM tasks WHERE id_task = @TaskId";
 
-            using var connection = _database.CreateConnection();
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
+            using var connection = _database.CreateConnection(); // Создание подключения к базе данных
+            using var command = connection.CreateCommand(); // Создание команды для выполнения запроса
+            command.CommandText = query; // Установка текста запроса
 
-            command.Parameters.AddWithValue("@TaskId", taskId);
+            command.Parameters.AddWithValue("@TaskId", taskId); // Добавление параметра taskId
 
-            int rowsAffected = command.ExecuteNonQuery();
+            int rowsAffected = command.ExecuteNonQuery(); // Выполнение запроса на удаление данных из таблицы
 
-            if (rowsAffected == 0)
+            if (rowsAffected == 0) // Проверка количества удаленных строк
             {
-                throw new Exception("Не удалось удалить данные.");
+                throw new Exception("Не удалось удалить данные."); // Если данные не были удалены, бросаем исключение
             }
         }
     }
 }
+

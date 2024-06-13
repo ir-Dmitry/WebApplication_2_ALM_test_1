@@ -15,35 +15,37 @@ namespace WebApplication_2_ALM_test_1.Services
             _postRepository = PostRepository;
         }
 
+        // Метод для получения всех должностей
         public Dictionary<int, PostDto> GetAllPosts()
         {
-            var posts = _postRepository.GetAllPosts();
+            var posts = _postRepository.GetAllPosts(); // Получение всех должностей через репозиторий
             return posts
-                .Select((post, index) => new { post, index })
-                .ToDictionary(x => x.index + 1, x => x.post);
+                .Select((post, index) => new { post, index }) // Преобразование списка должностей в анонимные объекты с индексом
+                .ToDictionary(x => x.index + 1, x => x.post); // Преобразование анонимных объектов в словарь, где ключ - индекс + 1, значение - должность
         }
 
+        // Метод для получения идентификаторов должностей
         public IEnumerable<PostIdDto> GetIdPost()
         {
-            return _postRepository.GetIdPost();
+            return _postRepository.GetIdPost(); // Получение идентификаторов должностей через репозиторий
         }
 
-        // Метод для добавления нового проекта
+        // Метод для добавления новой должности
         public void AddPost(Post post)
         {
-            _postRepository.AddPost(post);
+            _postRepository.AddPost(post); // Добавление должности через репозиторий
         }
 
-        // Метод для обновления существующего проекта
+        // Метод для обновления данных существующей должности
         public void UpdatePost(int postId, Post post)
         {
-            _postRepository.UpdatePost(postId, post);
+            _postRepository.UpdatePost(postId, post); // Обновление данных должности через репозиторий
         }
 
-        // Метод для удаления проекта
+        // Метод для удаления должности
         public void DeletePost(int postId)
         {
-            _postRepository.DeletePost(postId);
+            _postRepository.DeletePost(postId); // Удаление должности через репозиторий
         }
     }
 }

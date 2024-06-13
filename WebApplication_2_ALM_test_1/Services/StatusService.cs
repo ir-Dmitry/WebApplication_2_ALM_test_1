@@ -11,12 +11,13 @@ namespace WebApplication_2_ALM_test_1.Services
 
         public StatusService(StatusRepository statusRepository)
         {
-            _statusRepository = statusRepository;
+            _statusRepository = statusRepository; // Инициализация репозитория статусов через конструктор
         }
 
+        // Метод для получения идентификаторов статусов
         public IEnumerable<StatusDto> GetIdStatus()
         {
-            return _statusRepository.GetIdStatus();
+            return _statusRepository.GetIdStatus(); // Вызов метода репозитория для получения идентификаторов статусов
         }
     }
 }

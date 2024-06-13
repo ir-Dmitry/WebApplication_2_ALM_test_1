@@ -15,53 +15,54 @@ namespace WebApplication_2_ALM_test_1.Services
         {
             _employeeRepository = EmployeeRepository;
         }
+
+        // Метод для получения всех сотрудников
         public Dictionary<int, EmployeeDto> GetAllEmployee()
         {
-            var employees = _employeeRepository.GetAllEmployee();
+            var employees = _employeeRepository.GetAllEmployee(); // Получение всех сотрудников через репозиторий
             return employees
-                .Select((employee, index) => new { employee, index })
-                .ToDictionary(x => x.index + 1, x => x.employee);
+                .Select((employee, index) => new { employee, index }) // Преобразование списка сотрудников в анонимные объекты с индексом
+                .ToDictionary(x => x.index + 1, x => x.employee); // Преобразование анонимных объектов в словарь, где ключ - индекс + 1, значение - сотрудник
         }
 
+        // Метод для получения идентификаторов сотрудников
         public IEnumerable<EmployeeIdDto> GetIdEmployee()
         {
-            return _employeeRepository.GetIdEmployee();
+            return _employeeRepository.GetIdEmployee(); // Получение идентификаторов сотрудников через репозиторий
         }
 
-        // Метод для добавления нового проекта
+        // Метод для добавления нового сотрудника
         public string AddEmployee(Employee employee)
         {
-            var validationError = employee.Validate();
+            var validationError = employee.Validate(); // Проверка валидации данных сотрудника
             if (validationError != null)
             {
-                throw new ArgumentException(validationError);
+                throw new ArgumentException(validationError); // Если есть ошибки валидации, выбрасываем исключение
             }
-            var auth = new Authoraze();
 
-            var password = auth.GenerateRandomPassword();
-            var PasswordHash = auth.ComputeSha256Hash(password);
-            // "ZRvaOVcis%&i"
-            // "35b240e8bced38ab04e9897e5911e6f6e65f6a54f9ea2fc335554856e7c220f9"
+            var auth = new Authoraze(); // Создание объекта для работы с авторизацией
+            var password = auth.GenerateRandomPassword(); // Генерация случайного пароля
+            var PasswordHash = auth.ComputeSha256Hash(password); // Хеширование пароля
 
-            _employeeRepository.AddEmployee(employee, PasswordHash);
-            return password;
+            _employeeRepository.AddEmployee(employee, PasswordHash); // Добавление сотрудника через репозиторий
+            return password; // Возвращаем сгенерированный пароль
         }
 
-        // Метод для обновления существующего проекта
+        // Метод для обновления данных существующего сотрудника
         public void UpdateEmployee(int employeeId, Employee employee)
         {
-            var validationError = employee.Validate();
+            var validationError = employee.Validate(); // Проверка валидации данных сотрудника
             if (validationError != null)
             {
-                throw new ArgumentException(validationError);
+                throw new ArgumentException(validationError); // Если есть ошибки валидации, выбрасываем исключение
             }
-            _employeeRepository.UpdateEmployee(employeeId, employee);
+            _employeeRepository.UpdateEmployee(employeeId, employee); // Обновление данных сотрудника через репозиторий
         }
 
-        // Метод для удаления проекта
+        // Метод для удаления сотрудника
         public void DeleteEmployee(int employeeId)
         {
-            _employeeRepository.DeleteEmployee(employeeId);
+            _employeeRepository.DeleteEmployee(employeeId); // Удаление сотрудника через репозиторий
         }
     }
 }

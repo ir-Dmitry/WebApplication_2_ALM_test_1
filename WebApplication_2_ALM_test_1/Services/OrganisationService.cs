@@ -15,47 +15,49 @@ namespace WebApplication_2_ALM_test_1.Services
             _organisationRepository = OrganisationRepository;
         }
 
+        // Метод для получения всех организаций
         public Dictionary<int, OrganisationDto> GetAllOrganisations()
         {
-            var organisations = _organisationRepository.GetAllOrganisations();
+            var organisations = _organisationRepository.GetAllOrganisations(); // Получение всех организаций через репозиторий
             return organisations
-                .Select((organisation, index) => new { organisation, index })
-                .ToDictionary(x => x.index + 1, x => x.organisation);
+                .Select((organisation, index) => new { organisation, index }) // Преобразование списка организаций в анонимные объекты с индексом
+                .ToDictionary(x => x.index + 1, x => x.organisation); // Преобразование анонимных объектов в словарь, где ключ - индекс + 1, значение - организация
         }
 
+        // Метод для получения идентификаторов организаций
         public IEnumerable<OrganisationIdDto> GetIdOrganisation()
         {
-            return _organisationRepository.GetIdOrganisation();
+            return _organisationRepository.GetIdOrganisation(); // Получение идентификаторов организаций через репозиторий
         }
 
-        // Метод для добавления нового проекта
+        // Метод для добавления новой организации
         public void AddOrganisation(Organisation organisation)
         {
-            var validationError = organisation.Validate();
+            var validationError = organisation.Validate(); // Проверка валидации данных организации
             if (validationError != null)
             {
-                throw new ArgumentException(validationError);
+                throw new ArgumentException(validationError); // Если есть ошибки валидации, выбрасываем исключение
             }
 
-            _organisationRepository.AddOrganisation(organisation);
+            _organisationRepository.AddOrganisation(organisation); // Добавление организации через репозиторий
         }
 
-        // Метод для обновления существующего проекта
+        // Метод для обновления данных существующей организации
         public void UpdateOrganisation(int organisationId, Organisation organisation)
         {
-            var validationError = organisation.Validate();
+            var validationError = organisation.Validate(); // Проверка валидации данных организации
             if (validationError != null)
             {
-                throw new ArgumentException(validationError);
+                throw new ArgumentException(validationError); // Если есть ошибки валидации, выбрасываем исключение
             }
 
-            _organisationRepository.UpdateOrganisation(organisationId, organisation);
+            _organisationRepository.UpdateOrganisation(organisationId, organisation); // Обновление данных организации через репозиторий
         }
 
-        // Метод для удаления проекта
+        // Метод для удаления организации
         public void DeleteOrganisation(int organisationId)
         {
-            _organisationRepository.DeleteOrganisation(organisationId);
+            _organisationRepository.DeleteOrganisation(organisationId); // Удаление организации через репозиторий
         }
     }
 }

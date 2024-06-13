@@ -14,28 +14,34 @@ namespace WebApplication_2_ALM_test_1.Repository
             _database = database;
         }
 
+        // Метод для получения идентификаторов и названий статусов
         public IEnumerable<StatusDto> GetIdStatus()
         {
-            var statuss = new List<StatusDto>();
+            // Создаем список для хранения объектов DTO статусов
+            var statuses = new List<StatusDto>();
+
+            // Открываем соединение с базой данных
             using var connection = _database.CreateConnection();
             using var command = connection.CreateCommand();
             command.CommandText = @"SELECT s.id_status, s.status_name
                                     FROM _status AS s";
 
+            // Выполняем запрос и получаем данные через SqlDataReader
             using var reader = command.ExecuteReader();
 
-
+            // Перебираем результаты запроса и добавляем DTO статусов в список
             while (reader.Read())
             {
                 var status = new StatusDto
                 {
-                    Id = reader.GetByte(0),
-                    Name = reader.GetString(1)
+                    Id = reader.GetByte(0),         // Получаем значение первого столбца (id_status)
+                    Name = reader.GetString(1)      // Получаем значение второго столбца (status_name)
                 };
 
-                statuss.Add(status);
+                statuses.Add(status);   // Добавляем созданный объект DTO в список
             }
-            return statuss;
+
+            return statuses;    // Возвращаем список DTO статусов
         }
     }
 }
